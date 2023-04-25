@@ -1,11 +1,15 @@
 import 'uno.css'
+import '@/styles/index.scss'
 import '@/styles/reset.css'
+import 'virtual:svg-icons-register'
+
 import { createApp } from 'vue'
 import type { VueQueryPluginOptions } from '@tanstack/vue-query'
 import { VueQueryPlugin } from '@tanstack/vue-query'
 import App from './App.vue'
 import { setupRouter } from '@/router'
 import { setupStore } from '@/store'
+
 const vueQueryPluginOptions: VueQueryPluginOptions = {
   queryClientConfig: {
     defaultOptions: {

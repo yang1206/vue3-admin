@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import Layout from '@/layouts/index.vue'
+import AppProvider from '@/components/common/AppProvider.vue'
 </script>
 
 <template>
-  <main class="px-4 py-10 text-center font-sans text-gray-700 dark:text-gray-200">
-    <Layout />
-  </main>
+  <AppProvider>
+    <router-view v-slot="{ Component }">
+      <component :is="Component" />
+    </router-view>
+  </AppProvider>
 </template>

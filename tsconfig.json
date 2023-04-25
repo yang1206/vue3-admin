@@ -3,7 +3,7 @@
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "strict": true,
     "jsx": "preserve",
     "sourceMap": true,
@@ -27,7 +27,16 @@
     },
     "types": [
       "vite/client",
-      "node"
+      "node",
+      "unplugin-icons/types/vue",
+      "unplugin-vue-define-options/macros-global"
+    ]
+
+  },
+  "vueCompilerOptions": {
+    "target": 3, // 或 2.7 用于 Vue 2
+    "plugins": [
+      "@vue-macros/volar/define-options"
     ]
   },
   "exclude": [
@@ -40,4 +49,5 @@
     "**/*.ts",
     "**/*.vue"
   ]
+
 }

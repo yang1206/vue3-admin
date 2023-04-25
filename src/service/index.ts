@@ -1,18 +1,41 @@
 import type { AxiosRequestConfig, AxiosResponse } from 'axios'
 import Request from './request'
 import type { RequestConfig } from './request/types'
+import { resolveResError } from './request/helpers'
+import { getToken } from '@/utils'
 
+export interface IResponse<T = any> {
+  data: T
+  message: string
+  status: number
+}
 // 重写返回类型
-interface HttpRequestConfig<T, R> extends RequestConfig<R> {
+interface HttpRequestConfig<T, R> extends RequestConfig<IResponse<R>> {
   data?: T
 }
 const request = new Request({
-  baseURL: import.meta.env.VITE_APP_GLOB_BASE_API,
+  baseURL: import.meta.env.VITE_BASE_API,
   timeout: 1000 * 60 * 5,
   // withCredentials: true,
+  // headers: {
+  //   'Content-Type': 'application/x-www-form-urlencoded',
+  // },
   interceptors: {
     // 请求拦截器
     requestInterceptors: (config: AxiosRequestConfig) => {
+      const token = getToken()
+      if (!token) {
+        // TODO
+      }
+
+      else {
+        const Authorization = config.headers?.Authorization || `${token}`
+        if (config.headers) {
+          config.headers.Authorization = config.headers.Authorization || `${token}`
+          config.headers.token = config.headers.Authorization || `${token}`
+        }
+        else { config.headers = { Authorization } }
+      }
       return config
     },
     // 响应拦截器
@@ -20,8 +43,8 @@ const request = new Request({
       return result
     },
     responseInterceptorsCatch: (error) => {
-      // eslint-disable-next-line no-unused-expressions
-      error.response
+      const message = resolveResError(error.response.status, error.response.data.message)
+      window.$message?.error(message)
       return Promise.reject(new Error(error.response.data))
     },
   },
@@ -34,19 +57,19 @@ const request = new Request({
  * @param {HttpRequestConfig} config 不管是GET还是POST请求都使用data
  * @returns {Promise}
  */
-const HttpRequest = <D = any, T = any>(config: HttpRequestConfig<D, T>) => {
+function HttpRequest<D = any, T = any>(config: HttpRequestConfig<D, T>) {
   const { method = 'GET' } = config
   if (method === 'get' || method === 'GET')
     config.params = config.data
 
-  return request.request<T>(config)
+  return request.request<IResponse<T>>(config)
 }
 // 取消请求
-export const cancelRequest = (url: string | string[]) => {
+export function cancelRequest(url: string | string[]) {
   return request.cancelRequest(url)
 }
 // 取消全部请求
-export const cancelAllRequest = () => {
+export function cancelAllRequest() {
   return request.cancelAllRequest()
 }
 

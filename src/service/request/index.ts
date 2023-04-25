@@ -11,7 +11,6 @@ class Request {
   instance: AxiosInstance
   // 拦截器对象
   interceptorsObj?: RequestInterceptors<AxiosResponse>
-
   /*
   存放取消方法的集合
   * 在创建请求后将取消请求方法 push 到该集合中

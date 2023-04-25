@@ -22,7 +22,7 @@ const proxyConfigMappings: Record<ProxyType, ProxyConfig> = {
   },
   test: {
     prefix: '/api',
-    target: 'http://localhost:1206',
+    target: 'http://192.168.0.107:8080',
   },
   prod: {
     prefix: '/api',
