@@ -1,3 +1,4 @@
+
 /** 侧边栏 */
 interface Sider {
   width: number
@@ -39,7 +40,7 @@ interface OtherColor {
 declare namespace Theme {
   interface Setting {
     isMobile: boolean
-    darkMode: boolean
+    isDark: WritableComputedRef<boolean>
     sider: Sider
     header: Header
     tab: Tab

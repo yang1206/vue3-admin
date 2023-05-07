@@ -5,15 +5,18 @@ import { defineStore } from 'pinia'
 import { getNaiveThemeOverrides, initThemeSettings } from './helpers'
 
 type ThemeState = Theme.Setting
-
 export const useThemeStore = defineStore('theme-store', {
-  state: (): ThemeState => initThemeSettings(),
+  state: (): ThemeState => {
+    return {
+      ...initThemeSettings(),
+    }
+  },
   getters: {
     naiveThemeOverrides(): GlobalThemeOverrides {
       return getNaiveThemeOverrides({ primary: this.primaryColor, ...this.otherColor })
     },
     naiveTheme(): BuiltInGlobalTheme | undefined {
-      return this.darkMode ? darkTheme : undefined
+      return this.isDark ? darkTheme : undefined
     },
   },
   actions: {
@@ -22,11 +25,11 @@ export const useThemeStore = defineStore('theme-store', {
     },
     /** 设置暗黑模式 */
     setDarkMode(darkMode: boolean) {
-      this.darkMode = darkMode
+      this.isDark = darkMode
     },
     /** 切换/关闭 暗黑模式 */
     toggleDarkMode() {
-      this.darkMode = !this.darkMode
+      this.isDark = !this.isDark
     },
     /** 切换/关闭 折叠侧边栏 */
     toggleCollapsed() {

@@ -16,6 +16,7 @@ function setupNaiveTools() {
 
 const NaiveProviderContent = defineComponent({
   setup() {
+    setupCssVar()
     setupNaiveTools()
   },
   render() {
@@ -28,31 +29,26 @@ const themStore = useThemeStore()
 type ThemeVars = Exclude<GlobalThemeOverrides['common'], undefined>
 type ThemeVarsKeys = keyof ThemeVars
 
-watch(
-  () => themStore.naiveThemeOverrides.common,
-  (common) => {
-    for (const key in common) {
-      useCssVar(`--${kebabCase(key)}`, document.documentElement).value = common[key as ThemeVarsKeys] || ''
-      if (key === 'primaryColor')
-        window.localStorage.setItem('__THEME_COLOR__', common[key as ThemeVarsKeys] || '')
-    }
-  },
-  { immediate: true },
-)
+// watch(
+//   () => themStore.naiveThemeOverrides.common,
+//   (common) => {
+//     for (const key in common) {
+//       useCssVar(`--${kebabCase(key)}`, document.documentElement).value = common[key as ThemeVarsKeys] || ''
+//       if (key === 'primaryColor')
+//         window.localStorage.setItem('__THEME_COLOR__', common[key as ThemeVarsKeys] || '')
+//     }
+//   },
+//   { immediate: true },
+// )
 
-watch(
-  () => themStore.darkMode,
-  (newValue) => {
-    if (newValue)
-      document.documentElement.classList.add('dark')
-    else
-      document.documentElement.classList.remove('dark')
-  },
-  {
-    immediate: true,
-  },
-)
-
+function setupCssVar() {
+  const common = themStore.naiveThemeOverrides.common
+  for (const key in common) {
+    useCssVar(`--${kebabCase(key)}`, document.documentElement).value = common[key as ThemeVarsKeys] || ''
+    if (key === 'primaryColor')
+      window.localStorage.setItem('__THEME_COLOR__', common[key as ThemeVarsKeys] || '')
+  }
+}
 function handleWindowResize() {
   themStore.setIsMobile(document.body.offsetWidth <= 640)
 }
@@ -66,7 +62,11 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <n-config-provider wh-full :theme-overrides="themStore.naiveThemeOverrides" :theme="themStore.naiveTheme">
+  <n-config-provider
+    wh-full
+    :theme-overrides="themStore.naiveThemeOverrides"
+    :theme="themStore.naiveTheme"
+  >
     <n-loading-bar-provider>
       <n-dialog-provider>
         <n-notification-provider>
