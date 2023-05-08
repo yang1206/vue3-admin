@@ -73,13 +73,15 @@ function getMenuItem(route: RouteType, basePath = ''): MenuItem {
 
     if (visibleItems.length === 1)
       menuItem = getMenuItem(visibleItems[0], menuItem.path)
+
     else if (visibleItems.length > 1)
-      menuItem.children = visibleItems.map(item => getMenuItem(item, menuItem.path)).sort((a, b) => a.order - b.order)
+      menuItem.children = visibleItems.map(item => getMenuItem(item, menuItem.path))
+    // .sort((a, b) => a.order - b.order)
   }
   else {
     menuItem.children = visibleChildren
       .map(item => getMenuItem(item, menuItem.path))
-      .sort((a, b) => a.order - b.order)
+      // .sort((a, b) => a.order - b.order)
   }
 
   return menuItem

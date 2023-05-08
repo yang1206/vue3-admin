@@ -37,15 +37,7 @@ export const basicRoutes: RoutesType = [
         meta: {
           title: '源码 - github',
           icon: 'mdi:github',
-        },
-      },
-      {
-        name: 'LinkGiteeSrc',
-        path: 'https://github.com/yang1206/vue3-admin',
-        component: () => {},
-        meta: {
-          title: '源码 - gitee',
-          icon: 'simple-icons:gitee',
+          order: 3,
         },
       },
     ],
