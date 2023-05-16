@@ -2,14 +2,22 @@ import type { PluginOption } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import unocss from 'unocss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
+import VueDevTools from 'vite-plugin-vue-devtools'
 import { visualizer } from 'rollup-plugin-visualizer'
+import mkcert from 'vite-plugin-mkcert'
 import viteCompression from 'vite-plugin-compression'
 import unplugins from './unplugin'
 import { setupMockPlugin } from './mock'
+import type { env } from '~/env'
 
-export function setupVitePlugins(viteEnv: ViteEnv, isBuild: boolean): PluginOption[] {
+export function setupVitePlugins(viteEnv: typeof env, isBuild: boolean): PluginOption[] {
   const plugins = [
-    vue(),
+    vue({
+      script: {
+        defineModel: true,
+      },
+    }),
+    VueDevTools(),
     VitePWA({
       injectRegister: 'auto',
       registerType: 'autoUpdate',
@@ -36,6 +44,7 @@ export function setupVitePlugins(viteEnv: ViteEnv, isBuild: boolean): PluginOpti
         ],
       },
     }),
+    mkcert(),
     ...unplugins, unocss()]
   if (viteEnv.VITE_USE_MOCK)
     plugins.push(setupMockPlugin(isBuild))

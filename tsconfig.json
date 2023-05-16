@@ -28,16 +28,12 @@
     "types": [
       "vite/client",
       "node",
-      "unplugin-icons/types/vue",
-      "unplugin-vue-define-options/macros-global"
+      "unplugin-icons/types/vue"
     ]
 
   },
   "vueCompilerOptions": {
-    "target": 3, // 或 2.7 用于 Vue 2
-    "plugins": [
-      "@vue-macros/volar/define-options"
-    ]
+
   },
   "exclude": [
     "node_modules",

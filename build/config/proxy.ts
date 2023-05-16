@@ -1,6 +1,6 @@
 import type { ProxyOptions } from 'vite'
 
-export function createViteProxy(isUseProxy = true, proxyType: ProxyType) {
+export function createViteProxy(isUseProxy: boolean | 'true' | 'false' = true, proxyType: ProxyType) {
   if (!isUseProxy)
     return undefined
 

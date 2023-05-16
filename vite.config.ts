@@ -11,12 +11,14 @@ export default defineConfig((configEnv: ConfigEnv) => {
   const isBuild = configEnv.command === 'build'
   const viteEnv = convertEnv(loadEnv(configEnv.mode, process.cwd()))
   const { VITE_PORT, VITE_USE_PROXY, VITE_PROXY_TYPE } = viteEnv
+
   return {
     plugins: setupVitePlugins(viteEnv, isBuild),
     server: {
       host: '0.0.0.0',
-      port: VITE_PORT,
+      port: Number(VITE_PORT),
       open: false,
+      https: true,
       proxy: createViteProxy(VITE_USE_PROXY, VITE_PROXY_TYPE as ProxyType),
     },
     build: {

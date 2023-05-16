@@ -11,13 +11,11 @@ import IconsResolver from 'unplugin-icons/resolver'
  */
 import Icons from 'unplugin-icons/vite'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
-import DefineOptions from 'unplugin-vue-define-options/vite'
 import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 import { getRootPath, getSrcPath } from '../utils'
 
 const customIconPath = resolve(getSrcPath(), 'assets/svg')
 export default [
-  DefineOptions(),
   AutoImport({
     imports: ['vue', 'vue-router', '@vueuse/core'],
     dirs: [resolve(getSrcPath(), 'composables')],
