@@ -4,6 +4,7 @@ import { login } from '@/api'
 import { getLocal, removeLocal, setLocal, setToken } from '@/utils'
 import bgImg from '@/assets/images/login_bg.webp'
 import { addDynamicRoutes } from '@/router'
+import ThemeMode from '@/layout/header/components/ThemeMode.vue'
 
 const title: string = import.meta.env.VITE_APP_TITLE
 
@@ -63,7 +64,9 @@ async function handleLogin() {
 </script>
 
 <template>
-  <AppPage :show-footer="true" bg-cover :style="{ backgroundImage: `url(${bgImg})` }">
+  <AppPage class="dark:brightness-70" :show-footer="true" bg-cover :style="{ backgroundImage: `url(${bgImg})` }">
+    <ThemeMode class="absolute left-20 top-20" />
+
     <div m-auto min-w-345 f-c-c rounded-10 bg-white bg-opacity-60 p-15 card-shadow dark:bg-dark>
       <div hidden w-380 px-20 py-35 md:block>
         <img src="@/assets/images/login_banner.webp" w-full alt="login_banner">

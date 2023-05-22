@@ -12,7 +12,7 @@ interface UserInfo {
   /**
    * 0游客，1管理员，2超级管理员
    */
-  isAdmin?: Role
+  role?: Role
 }
 
 export const useUserStore = defineStore('user', {
@@ -31,8 +31,8 @@ export const useUserStore = defineStore('user', {
     avatar(): string {
       return this.userInfo.avatar || ''
     },
-    isAdmin(): Role {
-      return this.userInfo.isAdmin || 0
+    role(): Role {
+      return this.userInfo.role || 0
     },
   },
   actions: {
@@ -41,7 +41,7 @@ export const useUserStore = defineStore('user', {
         const res: any = await getUser()
         if (res.code === 0) {
           const { id, name, avatar, isAdmin } = res.data
-          this.userInfo = { id, name, avatar, isAdmin }
+          this.userInfo = { id, name, avatar, role: isAdmin }
           return Promise.resolve(res.data)
         }
         else {

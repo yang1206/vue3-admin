@@ -221,7 +221,7 @@ function handleDelete(id: number) {
 <template>
   <CommonPage show-footer title="文章">
     <template #action>
-      <NButton type="primary" @click="handleAdd">
+      <NButton v-permission="[2]" type="primary" @click="handleAdd">
         <TheIcon icon="material-symbols:add" :size="18" class="mr-5" /> 新建文章
       </NButton>
     </template>
@@ -250,7 +250,7 @@ function handleDelete(id: number) {
 
     <n-data-table
       mt-30 :scroll-x="1200" :loading="isLoading" :columns="columns" :data="data?.pageData"
-      :pagination="{ ...queryForm }" :bordered="false" :row-key="row => row.id" @update:checked-row-keys="onChecked"
+      :pagination="{ ...queryForm }" :bordered="false" :row-key="row => row.id"
     />
     <!-- 新增/编辑/查看 -->
   </CommonPage>
