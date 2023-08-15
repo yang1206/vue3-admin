@@ -1,9 +1,8 @@
 import { useQuery } from '@tanstack/vue-query'
-import type { IPostsData } from './types'
 import request from '@/service'
 
 export function getPosts(data?: any) {
-  return request<unknown, IPostsData>({
+  return request<unknown, POST.IPostsData>({
     url: 'posts',
     method: 'GET',
     data,

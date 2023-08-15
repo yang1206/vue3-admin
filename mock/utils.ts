@@ -1,4 +1,4 @@
-export function resolveToken(authorization) {
+export function resolveToken(authorization: string) {
   /**
    * * jwt token
    * * Bearer + token

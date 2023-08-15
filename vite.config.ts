@@ -1,3 +1,4 @@
+import process from 'node:process'
 import type { ConfigEnv } from 'vite'
 import { loadEnv } from 'vite'
 import { defineConfig } from 'vitest/config'
@@ -18,7 +19,7 @@ export default defineConfig((configEnv: ConfigEnv) => {
       host: '0.0.0.0',
       port: Number(VITE_PORT),
       open: false,
-      https: true,
+      https: !!viteEnv.VITE_MKERT,
       proxy: createViteProxy(VITE_USE_PROXY, VITE_PROXY_TYPE as ProxyType),
     },
     build: {

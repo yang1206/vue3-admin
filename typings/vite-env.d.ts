@@ -21,6 +21,16 @@ interface ImportMetaEnv {
   readonly VITE_BASE_API: string
   readonly VITE_PROXY_TYPE?: ProxyType
   readonly VITE_USE_COMPRESS?: boolean
+  readonly VITE_PWA?: boolean
+  readonly VITE_VISUALIZER?: boolean
+  readonly VITE_IMAGE_OPTIMIZER?: boolean
+  readonly VITE_DEVTOOL?: boolean
+  /**
+   * 为开发服务器提供 https 支持
+   */
+  readonly VITE_MKERT?: boolean
+
+
   readonly VITE_COMPRESS_TYPE?: 'gzip' | 'brotliCompress' | 'deflate' | 'deflateRaw'
   // 更多环境变量...
 }

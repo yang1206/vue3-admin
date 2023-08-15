@@ -4,7 +4,6 @@ import { NButton, NForm, NSwitch } from 'naive-ui'
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import { formatDateTime, isNullOrUndef, renderIcon } from '@/utils'
 import { addPost, deletePost, updatePost, usePosts } from '@/api'
-import type { RowData } from '@/api/types'
 
 const queryClient = useQueryClient()
 const modalAction = ref('')
@@ -62,7 +61,7 @@ async function handleQuery() {
   queryClient.refetchQueries(['posts'])
 }
 
-const columns: DataTableColumns<RowData> = [
+const columns: DataTableColumns<POST.RowData> = [
   { type: 'selection', fixed: 'left' },
   {
     title: '发布',
@@ -150,7 +149,7 @@ function onChecked(rowKeys: string[]) {
 }
 
 // 发布
-function handlePublish(row: RowData) {
+function handlePublish(row: POST.RowData) {
   if (isNullOrUndef(row.id))
     return
 
@@ -190,14 +189,14 @@ function handleSave() {
   })
 }
 /** 修改 */
-function handleEdit(row: RowData) {
+function handleEdit(row: POST.RowData) {
   modalAction.value = 'edit'
   modalVisible.value = true
   modalForm = { ...row }
 }
 
 /** 查看 */
-function handleView(row: RowData) {
+function handleView(row: POST.RowData) {
   modalAction.value = 'view'
   modalVisible.value = true
   modalForm = { ...row }

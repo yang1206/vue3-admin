@@ -2,7 +2,6 @@
   "recommendations": [
     "Vue.volar",
     "antfu.iconify",
-    "antfu.unocss",
-    "antfu.vite"
+    "antfu.unocss"
   ]
 }
