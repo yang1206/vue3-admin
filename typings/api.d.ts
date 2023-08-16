@@ -15,6 +15,8 @@ declare namespace POST {
   export interface IPostsData {
     pageData: RowData[]
     total: number
+    pageNum: string
+    pageSize: string
   }
 
 }

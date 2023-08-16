@@ -45,8 +45,8 @@ const userStore = useUserStore()
                 </a>
               </n-statistic>
               <n-statistic label="Forks" ml-20 w-80>
-                <a href="https://github.com/zclzone/qs-admin">
-                  <img allt="forks" src="https://badgen.net/github/forks/zclzone/qs-admin">
+                <a href="https://github.com/yang1206/vue3-admin">
+                  <img allt="forks" src="https://badgen.net/github/forks/yang1206/vue3-admin">
                 </a>
               </n-statistic>
             </div>

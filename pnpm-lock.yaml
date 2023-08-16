@@ -26,6 +26,9 @@ dependencies:
   naive-ui:
     specifier: ^2.34.4
     version: 2.34.4(vue@3.3.4)
+  naive-ui-pro-components:
+    specifier: 0.3.0-beta.1
+    version: 0.3.0-beta.1
   pinia:
     specifier: ^2.1.6
     version: 2.1.6(typescript@5.1.6)(vue@3.3.4)
@@ -117,7 +120,7 @@ devDependencies:
     version: 5.1.6
   unocss:
     specifier: 0.55.0
-    version: 0.55.0(postcss@8.4.23)(rollup@2.79.1)(vite@4.4.9)
+    version: 0.55.0(postcss@8.4.27)(rollup@2.79.1)(vite@4.4.9)
   unplugin-auto-import:
     specifier: 0.16.1
     version: 0.16.1(@vueuse/core@10.3.0)(rollup@2.79.1)
@@ -2258,6 +2261,78 @@ packages:
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
     dev: false
 
+  /@naive-ui-pro/checkbox@0.3.0-beta.1:
+    resolution: {integrity: sha512-j5U9tVAtPNf8CdpmpcqMG31x1kBEcBZNfTugJKtm9UvgRsEiCKDcsiKZ/eEmMXs0YScjPAthGMdL1oiXiuCtsQ==}
+    dependencies:
+      '@naive-ui-pro/utils': 0.3.0-beta.1
+      '@vueuse/core': 10.0.0-beta.0(vue@3.3.4)
+      naive-ui: 2.34.4(vue@3.3.4)
+      nanoid: 4.0.2
+      vue: 3.3.4
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+    dev: false
+
+  /@naive-ui-pro/controls@0.3.0-beta.1:
+    resolution: {integrity: sha512-TO+aBf1iXlk36xnSBuBqVNATyzJaDLFgQ+pTkIfjKkRdgPsLjsR6BbyekHupR700+df/7m+0bfeQsPqbSvIlqQ==}
+    dependencies:
+      '@naive-ui-pro/utils': 0.3.0-beta.1
+      naive-ui: 2.34.4(vue@3.3.4)
+      vue: 3.3.4
+    dev: false
+
+  /@naive-ui-pro/form@0.3.0-beta.1:
+    resolution: {integrity: sha512-2l4EHqU2JRdfAm5R3BImukMXHgQH05S8yF+HsgDY1g7E2MBbGNbx+ytSTBuoSOjItqxjVpgJN2+fOW3EhnFIKA==}
+    dependencies:
+      '@naive-ui-pro/checkbox': 0.3.0-beta.1
+      '@naive-ui-pro/radio': 0.3.0-beta.1
+      '@naive-ui-pro/utils': 0.3.0-beta.1
+      '@vueuse/core': 10.0.0-beta.0(vue@3.3.4)
+      naive-ui: 2.34.4(vue@3.3.4)
+      vue: 3.3.4
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+    dev: false
+
+  /@naive-ui-pro/globals@0.3.0-beta.1:
+    resolution: {integrity: sha512-5fn7Ycq6h8IxZhATQT6W0VmCcVT6X4LeIcz56DP2X4zJlm4YTZCMX93XdBOTsB9wBLSPLddArGMnuCoEonlIDQ==}
+    dependencies:
+      defu: 6.1.2
+      naive-ui: 2.34.4(vue@3.3.4)
+      vue: 3.3.4
+    dev: false
+
+  /@naive-ui-pro/radio@0.3.0-beta.1:
+    resolution: {integrity: sha512-SfWL2NyS6OgMhS37yCsmxEI++26wg6G7JMSswa4/USw2CoxwDScZCgBadmmlQ5Fh9N7CjPjHQ8l0uGAJMyXc3Q==}
+    dependencies:
+      '@naive-ui-pro/utils': 0.3.0-beta.1
+      '@vueuse/core': 10.0.0-beta.0(vue@3.3.4)
+      naive-ui: 2.34.4(vue@3.3.4)
+      nanoid: 4.0.2
+      vue: 3.3.4
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+    dev: false
+
+  /@naive-ui-pro/table@0.3.0-beta.1:
+    resolution: {integrity: sha512-GrjDPufJA2THz7OlzuPJeCDQLhEZsRFXCA1+BQV3s78oqqnQOISF1jlbX0tR9mjFz+HKXXa1cyDOOCFMU5rs+g==}
+    dependencies:
+      '@naive-ui-pro/utils': 0.3.0-beta.1
+      '@vueuse/core': 10.0.0-beta.0(vue@3.3.4)
+      naive-ui: 2.34.4(vue@3.3.4)
+      nanoid: 4.0.2
+      vue: 3.3.4
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+    dev: false
+
+  /@naive-ui-pro/utils@0.3.0-beta.1:
+    resolution: {integrity: sha512-qxnV8Gn1wSCKfoiNpmkutB2DWxiuEQC+wvQW5Li0ouKZNcUxOl6qVtDNkxp2qwjDYO6SZWYnjRFR1zcGQAkeog==}
+    dependencies:
+      defu: 6.1.2
+      vue: 3.3.4
+    dev: false
+
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -2638,6 +2713,10 @@ packages:
     resolution: {integrity: sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==}
     dev: true
 
+  /@types/web-bluetooth@0.0.16:
+    resolution: {integrity: sha512-oh8q2Zc32S6gd/j50GowEjKLoOVOwHP/bWVjKJInBwQqdOYMdPrf1oVlelTlyfFK3CKxL1uahMDAr+vy8T7yMQ==}
+    dev: false
+
   /@types/web-bluetooth@0.0.17:
     resolution: {integrity: sha512-4p9vcSmxAayx72yn70joFoL44c9MO/0+iVEBIQXe3v2h2SiAsEIo/G5v6ObFWvNKRFjbrVadNf9LqEEZeQPzdA==}
 
@@ -2923,7 +3002,7 @@ packages:
       sirv: 2.0.3
     dev: true
 
-  /@unocss/postcss@0.55.0(postcss@8.4.23):
+  /@unocss/postcss@0.55.0(postcss@8.4.27):
     resolution: {integrity: sha512-qytqO8riNLpy1m6qVfISVHw3dwNRHgpxcUaufSN7P8lgsbOimwh2nRE35f/HoKS1VV+5JVsVaHmUFQVxwiW6cw==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -2934,7 +3013,7 @@ packages:
       css-tree: 2.3.1
       fast-glob: 3.3.1
       magic-string: 0.30.2
-      postcss: 8.4.23
+      postcss: 8.4.27
     dev: true
 
   /@unocss/preset-attributify@0.55.0:
@@ -3274,6 +3353,18 @@ packages:
       - typescript
     dev: true
 
+  /@vueuse/core@10.0.0-beta.0(vue@3.3.4):
+    resolution: {integrity: sha512-vvl/UqN74rKcbobsCA/zXTigaxQIZV0ceZsG7DokSzp8MGC9a6JqYIp/ObVcb2k1OsXwuljtRb71J2eTOa21qA==}
+    dependencies:
+      '@types/web-bluetooth': 0.0.16
+      '@vueuse/metadata': 10.0.0-beta.0
+      '@vueuse/shared': 10.0.0-beta.0(vue@3.3.4)
+      vue-demi: 0.14.5(vue@3.3.4)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
+
   /@vueuse/core@10.3.0(vue@3.3.4):
     resolution: {integrity: sha512-BEM5yxcFKb5btFjTSAFjTu5jmwoW66fyV9uJIP4wUXXU8aR5Hl44gndaaXp7dC5HSObmgbnR2RN+Un1p68Mf5Q==}
     dependencies:
@@ -3285,8 +3376,21 @@ packages:
       - '@vue/composition-api'
       - vue
 
+  /@vueuse/metadata@10.0.0-beta.0:
+    resolution: {integrity: sha512-n60qpVAiqxchTglK/3Hx5e/FTorpS+N6XxcVB/enF0DpIEguEeAAP+NYY0uoCRdznZ9Zjl4DCpKxPFDWQvrnoA==}
+    dev: false
+
   /@vueuse/metadata@10.3.0:
     resolution: {integrity: sha512-Ema3YhNOa4swDsV0V7CEY5JXvK19JI/o1szFO1iWxdFg3vhdFtCtSTP26PCvbUpnUtNHBY2wx5y3WDXND5Pvnw==}
+
+  /@vueuse/shared@10.0.0-beta.0(vue@3.3.4):
+    resolution: {integrity: sha512-GhnEjm/G38dYRj4HpHlkdS3l/6OXZtQlI3nvoguBrxXb2UhrEs8FYcKK+mgBIckS+rLe6MZcY1c5/uTcpwUSRA==}
+    dependencies:
+      vue-demi: 0.14.5(vue@3.3.4)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
 
   /@vueuse/shared@10.3.0(vue@3.3.4):
     resolution: {integrity: sha512-kGqCTEuFPMK4+fNWy6dUOiYmxGcUbtznMwBZLC1PubidF4VZY05B+Oht7Jh7/6x4VOWGpvu3R37WHi81cKpiqg==}
@@ -4121,7 +4225,7 @@ packages:
   /constantinople@4.0.1:
     resolution: {integrity: sha512-vCrqcSIq4//Gx74TXXCGnHpulY1dskqLTFGDmhrGxzeXL8lF8kvXv6mpNWlJj1uD4DW23D4ljAqbY4RRaaUZIw==}
     dependencies:
-      '@babel/parser': 7.21.8
+      '@babel/parser': 7.22.10
       '@babel/types': 7.21.5
     dev: true
 
@@ -4522,7 +4626,6 @@ packages:
 
   /defu@6.1.2:
     resolution: {integrity: sha512-+uO4+qr7msjNNWKYPHqN/3+Dx3NFkmIzayk2L1MyZQlvgZb/J1A0fo410dpKrN2SnqFjt8n4JL8fDJE0wIgjFQ==}
-    dev: true
 
   /delayed-stream@1.0.0:
     resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==}
@@ -7364,6 +7467,22 @@ packages:
     resolution: {integrity: sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==}
     dev: true
 
+  /naive-ui-pro-components@0.3.0-beta.1:
+    resolution: {integrity: sha512-/ZQ7GB7F6Dgp86gG/sPv01qhz85MdpqGNsXEHrHmagYuSX+Wyi5+yVvb1yriJO62v8g8wnul71G8HW9VTo74WQ==}
+    engines: {node: '>=14'}
+    dependencies:
+      '@naive-ui-pro/checkbox': 0.3.0-beta.1
+      '@naive-ui-pro/controls': 0.3.0-beta.1
+      '@naive-ui-pro/form': 0.3.0-beta.1
+      '@naive-ui-pro/globals': 0.3.0-beta.1
+      '@naive-ui-pro/radio': 0.3.0-beta.1
+      '@naive-ui-pro/table': 0.3.0-beta.1
+      naive-ui: 2.34.4(vue@3.3.4)
+      vue: 3.3.4
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+    dev: false
+
   /naive-ui@2.34.4(vue@3.3.4):
     resolution: {integrity: sha512-aPG8PDfhSzIzn/jSC9y3Jb3Pe2wHJ7F0cFV1EWlbImSrZECeUmoc+fIcOSWbizoztkKfaUAeKwYdMl09MKkj1g==}
     peerDependencies:
@@ -7394,6 +7513,12 @@ packages:
     resolution: {integrity: sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
+
+  /nanoid@4.0.2:
+    resolution: {integrity: sha512-7ZtY5KTCNheRGfEFxnedV5zFiORN1+Y1N6zvPTnHQd8ENUvfaDBeuJDZb2bN/oXwXxu3qkTXDzy57W5vAmDTBw==}
+    engines: {node: ^14 || ^16 || >=18}
+    hasBin: true
+    dev: false
 
   /nanomatch@1.2.13:
     resolution: {integrity: sha512-fpoe2T0RbHwBTBUOftAfBPaDEi06ufaUai0mE6Yn1kacc3SnTErfb/h+X94VXzI64rKFHYImXSvdwGGCmwOqCA==}
@@ -9410,7 +9535,7 @@ packages:
     engines: {node: '>= 10.0.0'}
     dev: true
 
-  /unocss@0.55.0(postcss@8.4.23)(rollup@2.79.1)(vite@4.4.9):
+  /unocss@0.55.0(postcss@8.4.27)(rollup@2.79.1)(vite@4.4.9):
     resolution: {integrity: sha512-mjtN/2Dr495swOA/u/UaA0keCtv8/vFc114pd0D4XzpbK2/nKNB9Got/lmhJp8fxblV+oNtLkD0PaHtpAvSpsw==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -9426,7 +9551,7 @@ packages:
       '@unocss/cli': 0.55.0(rollup@2.79.1)
       '@unocss/core': 0.55.0
       '@unocss/extractor-arbitrary-variants': 0.55.0
-      '@unocss/postcss': 0.55.0(postcss@8.4.23)
+      '@unocss/postcss': 0.55.0(postcss@8.4.27)
       '@unocss/preset-attributify': 0.55.0
       '@unocss/preset-icons': 0.55.0
       '@unocss/preset-mini': 0.55.0
@@ -10168,7 +10293,7 @@ packages:
     resolution: {integrity: sha512-RNGKj82nUPg3g5ygxkQl0R937xLyho1J24ItRCBTr/m1YnZkzJy1hUiHUJrc/VlsDQzsCnInEGSg3bci0Lmd4w==}
     engines: {node: '>= 10.0.0'}
     dependencies:
-      '@babel/parser': 7.21.8
+      '@babel/parser': 7.22.10
       '@babel/types': 7.21.5
       assert-never: 1.2.1
       babel-walk: 3.0.0-canary-5

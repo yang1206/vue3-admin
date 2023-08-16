@@ -28,9 +28,13 @@ declare global {
   const debouncedWatch: typeof import('@vueuse/core')['debouncedWatch']
   const defineAsyncComponent: typeof import('vue')['defineAsyncComponent']
   const defineComponent: typeof import('vue')['defineComponent']
+  const defineControls: typeof import('naive-ui-pro-components')['defineControls']
+  const defineForm: typeof import('naive-ui-pro-components')['defineForm']
+  const defineTable: typeof import('naive-ui-pro-components')['defineTable']
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
   const extendRef: typeof import('@vueuse/core')['extendRef']
+  const field: typeof import('naive-ui-pro-components')['field']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
   const h: typeof import('vue')['h']
@@ -130,6 +134,9 @@ declare global {
   const useClipboard: typeof import('@vueuse/core')['useClipboard']
   const useCloned: typeof import('@vueuse/core')['useCloned']
   const useColorMode: typeof import('@vueuse/core')['useColorMode']
+  const useColumnIndexes: typeof import('naive-ui-pro-components')['useColumnIndexes']
+  const useColumnLink: typeof import('naive-ui-pro-components')['useColumnLink']
+  const useColumns: typeof import('naive-ui-pro-components')['useColumns']
   const useConfirmDialog: typeof import('@vueuse/core')['useConfirmDialog']
   const useCounter: typeof import('@vueuse/core')['useCounter']
   const useCssModule: typeof import('vue')['useCssModule']
@@ -314,9 +321,13 @@ declare module 'vue' {
     readonly debouncedWatch: UnwrapRef<typeof import('@vueuse/core')['debouncedWatch']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
+    readonly defineControls: UnwrapRef<typeof import('naive-ui-pro-components')['defineControls']>
+    readonly defineForm: UnwrapRef<typeof import('naive-ui-pro-components')['defineForm']>
+    readonly defineTable: UnwrapRef<typeof import('naive-ui-pro-components')['defineTable']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
+    readonly field: UnwrapRef<typeof import('naive-ui-pro-components')['field']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
@@ -416,6 +427,9 @@ declare module 'vue' {
     readonly useClipboard: UnwrapRef<typeof import('@vueuse/core')['useClipboard']>
     readonly useCloned: UnwrapRef<typeof import('@vueuse/core')['useCloned']>
     readonly useColorMode: UnwrapRef<typeof import('@vueuse/core')['useColorMode']>
+    readonly useColumnIndexes: UnwrapRef<typeof import('naive-ui-pro-components')['useColumnIndexes']>
+    readonly useColumnLink: UnwrapRef<typeof import('naive-ui-pro-components')['useColumnLink']>
+    readonly useColumns: UnwrapRef<typeof import('naive-ui-pro-components')['useColumns']>
     readonly useConfirmDialog: UnwrapRef<typeof import('@vueuse/core')['useConfirmDialog']>
     readonly useCounter: UnwrapRef<typeof import('@vueuse/core')['useCounter']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
@@ -594,9 +608,13 @@ declare module '@vue/runtime-core' {
     readonly debouncedWatch: UnwrapRef<typeof import('@vueuse/core')['debouncedWatch']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
+    readonly defineControls: UnwrapRef<typeof import('naive-ui-pro-components')['defineControls']>
+    readonly defineForm: UnwrapRef<typeof import('naive-ui-pro-components')['defineForm']>
+    readonly defineTable: UnwrapRef<typeof import('naive-ui-pro-components')['defineTable']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
+    readonly field: UnwrapRef<typeof import('naive-ui-pro-components')['field']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
@@ -696,6 +714,9 @@ declare module '@vue/runtime-core' {
     readonly useClipboard: UnwrapRef<typeof import('@vueuse/core')['useClipboard']>
     readonly useCloned: UnwrapRef<typeof import('@vueuse/core')['useCloned']>
     readonly useColorMode: UnwrapRef<typeof import('@vueuse/core')['useColorMode']>
+    readonly useColumnIndexes: UnwrapRef<typeof import('naive-ui-pro-components')['useColumnIndexes']>
+    readonly useColumnLink: UnwrapRef<typeof import('naive-ui-pro-components')['useColumnLink']>
+    readonly useColumns: UnwrapRef<typeof import('naive-ui-pro-components')['useColumns']>
     readonly useConfirmDialog: UnwrapRef<typeof import('@vueuse/core')['useConfirmDialog']>
     readonly useCounter: UnwrapRef<typeof import('@vueuse/core')['useCounter']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>

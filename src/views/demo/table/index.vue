@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import type { DataTableColumns } from 'naive-ui'
-import { NButton, NForm, NSwitch } from 'naive-ui'
+import type { DataTableColumns, PaginationProps } from 'naive-ui'
+import { NButton, NForm } from 'naive-ui'
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
-import { formatDateTime, isNullOrUndef, renderIcon } from '@/utils'
+import { formatDateTime, renderIcon } from '@/utils'
 import { addPost, deletePost, updatePost, usePosts } from '@/api'
+import { useUserStore } from '@/store'
 
+const userStore = useUserStore()
 const queryClient = useQueryClient()
 const modalAction = ref('')
-let modalForm = reactive({ author: '大脸怪', title: '', content: '' })
+let modalForm = reactive({ author: userStore.name, title: '', content: '' })
 const modalFormRef = ref<InstanceType<typeof NForm>>()
 const modalVisible = ref(false)
 interface Actions {
@@ -27,7 +29,7 @@ const modalTitle = computed(() => `${ACTIONS[modalAction.value]}文章`)
 const queryForm = reactive({
   title: '',
   pageNum: 1,
-  pageSize: 10,
+  pageSize: 8,
 })
 const { mutate: addMutate } = useMutation({
   mutationFn: addPost,
@@ -63,22 +65,6 @@ async function handleQuery() {
 
 const columns: DataTableColumns<POST.RowData> = [
   { type: 'selection', fixed: 'left' },
-  {
-    title: '发布',
-    key: 'isPublish',
-    width: 60,
-    align: 'center',
-    fixed: 'left',
-    render(row) {
-      return h(NSwitch, {
-        size: 'small',
-        rubberBand: false,
-        value: row.isPublish,
-        loading: !!row.publishing,
-        onUpdateValue: () => handlePublish(row),
-      })
-    },
-  },
   { title: '标题', key: 'title', width: 150, ellipsis: { tooltip: true } },
   { title: '分类', key: 'category', width: 80, ellipsis: { tooltip: true } },
   { title: '创建人', key: 'author', width: 80 },
@@ -142,29 +128,10 @@ const columns: DataTableColumns<POST.RowData> = [
   },
 ]
 
-// 选中事件
-function onChecked(rowKeys: string[]) {
-  if (rowKeys.length)
-    window.$message?.info(`选中${rowKeys.join(' ')}`)
-}
-
-// 发布
-function handlePublish(row: POST.RowData) {
-  if (isNullOrUndef(row.id))
-    return
-
-  row.publishing = true
-  setTimeout(() => {
-    row.isPublish = !row.isPublish
-    row.publishing = false
-    window.$message?.success(row.isPublish ? '已发布' : '已取消发布')
-  }, 1000)
-}
-
 async function handleReset() {
   queryForm.title = ''
   queryForm.pageNum = 1
-  queryForm.pageSize = 10
+  queryForm.pageSize = 8
   handleQuery()
 }
 
@@ -215,14 +182,41 @@ function handleDelete(id: number) {
     },
   })
 }
+
+const Pagination = reactive<PaginationProps>(
+  {
+    page: queryForm.pageNum,
+    pageSize: queryForm.pageSize,
+    itemCount: data.value?.total,
+    pageSizes: [8, 16, 30, 40],
+    showQuickJumper: true,
+    prefix: () => {
+      return h('span', `共${data.value?.total}条`)
+    },
+    onUpdatePage: async (page: number) => {
+      Pagination.page = page
+      queryForm.pageNum = page
+      await handleQuery()
+    },
+    // itemCount: data.value?.total,
+    onUpdatePageSize: async (pageSize: number) => {
+      Pagination.pageSize = pageSize
+      queryForm.pageSize = pageSize
+      queryForm.pageNum = 1
+      await handleQuery()
+    },
+  },
+)
 </script>
 
 <template>
   <CommonPage show-footer title="文章">
     <template #action>
-      <NButton v-permission="[2]" type="primary" @click="handleAdd">
-        <TheIcon icon="material-symbols:add" :size="18" class="mr-5" /> 新建文章
-      </NButton>
+      <div>
+        <NButton v-permission="[2, 0, 1, 3, 4]" type="primary" @click="handleAdd">
+          <TheIcon icon="material-symbols:add" :size="18" class="mr-5" /> 新建文章
+        </NButton>
+      </div>
     </template>
 
     <div bg="#fafafc" min-h-60 flex items-start justify-between b-1 rounded-8 p-15 bc-ccc dark:bg-black>
@@ -249,8 +243,13 @@ function handleDelete(id: number) {
 
     <n-data-table
       mt-30 :scroll-x="1200" :loading="isLoading" :columns="columns" :data="data?.pageData"
-      :pagination="{ ...queryForm }" :bordered="false" :row-key="row => row.id"
+      :bordered="false" :row-key="row => row.id"
     />
+    <div class="flex justify-end pt-10">
+      <n-pagination
+        v-bind="Pagination as any"
+      />
+    </div>
     <!-- 新增/编辑/查看 -->
   </CommonPage>
   <n-modal

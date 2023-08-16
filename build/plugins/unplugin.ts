@@ -3,6 +3,8 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 import IconsResolver from 'unplugin-icons/resolver'
+import NaiveUIProResolver from 'naive-ui-pro-components/resolver'
+import NaiveUIProImports from 'naive-ui-pro-components/imports'
 
 /**
  * * unplugin-icons插件，自动引入iconify图标
@@ -17,7 +19,7 @@ import { getRootPath, getSrcPath } from '../utils'
 const customIconPath = resolve(getSrcPath(), 'assets/svg')
 export default [
   AutoImport({
-    imports: ['vue', 'vue-router', '@vueuse/core'],
+    imports: ['vue', 'vue-router', '@vueuse/core', NaiveUIProImports()],
     dirs: [resolve(getSrcPath(), 'composables')],
     vueTemplate: true,
     dts: resolve(getRootPath(), 'typings/auto-import.d.ts'),
@@ -31,7 +33,7 @@ export default [
     defaultClass: 'inline-block',
   }),
   Components({
-    resolvers: [NaiveUiResolver(), IconsResolver({ customCollections: ['custom'], componentPrefix: 'icon' })],
+    resolvers: [NaiveUIProResolver(), NaiveUiResolver(), IconsResolver({ customCollections: ['custom'], componentPrefix: 'icon' })],
     dts: resolve(getRootPath(), 'typings/components.d.ts'),
   }),
   createSvgIconsPlugin({

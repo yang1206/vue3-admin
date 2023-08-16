@@ -38,6 +38,17 @@ export default {
       },
     },
     {
+      name: 'Pro Table',
+      path: 'pro-table',
+      component: () => import('@/views/demo/pro-table/index.vue'),
+      meta: {
+        title: 'Pro 表格',
+        icon: 'mdi:table',
+        role: [0, 1, 2],
+        requireAuth: true,
+      },
+    },
+    {
       name: 'Table',
       path: 'table',
       component: () => import('@/views/demo/table/index.vue'),

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { kebabCase } from 'lodash-es'
-import { useDialog, useLoadingBar, useMessage, useNotification } from 'naive-ui'
+import { NLoadingBarProvider, NNotificationProvider, dateZhCN, useDialog, useLoadingBar, useMessage, useNotification, zhCN } from 'naive-ui'
 import { useCssVar } from '@vueuse/core'
 import type { GlobalThemeOverrides } from 'naive-ui'
-
+import { NGlobalDialog, NGlobalMessage, NInstallProvider } from 'naive-ui-pro-components'
 import { useThemeStore } from '@/store'
 
 // 挂载naive组件的方法至window, 以便在全局使用
@@ -63,19 +63,21 @@ onBeforeUnmount(() => {
 
 <template>
   <n-config-provider
+    :locale="zhCN" :date-locale="dateZhCN"
     wh-full
     :theme-overrides="themStore.naiveThemeOverrides"
     :theme="themStore.naiveTheme"
   >
-    <n-loading-bar-provider>
-      <n-dialog-provider>
-        <n-notification-provider>
-          <n-message-provider>
-            <slot />
-            <NaiveProviderContent />
-          </n-message-provider>
-        </n-notification-provider>
-      </n-dialog-provider>
-    </n-loading-bar-provider>
+    <NInstallProvider
+      :install="[
+        NGlobalMessage,
+        NGlobalDialog,
+        NLoadingBarProvider,
+        NNotificationProvider,
+      ]"
+    >
+      <slot />
+      <NaiveProviderContent />
+    </NInstallProvider>
   </n-config-provider>
 </template>
