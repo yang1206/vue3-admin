@@ -26,8 +26,10 @@ export const useTabStore = defineStore('tab', {
       setSession('tabs', tabs)
     },
     addTab(tab: TabItem) {
-      this.setActiveTab(tab.path)
-      if (WITHOUT_TAB_PATHS.includes(tab.path) || this.tabs.some(item => item.path === tab.path))
+      const url = new URL(tab.path, 'http://example.com')
+      const path = url.pathname
+      this.setActiveTab(path)
+      if (WITHOUT_TAB_PATHS.includes(path) || this.tabs.some(item => item.path === path))
         return
       this.setTabs([...this.tabs, tab])
     },

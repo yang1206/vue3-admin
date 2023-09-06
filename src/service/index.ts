@@ -1,4 +1,4 @@
-import type { AxiosRequestConfig, AxiosResponse } from 'axios'
+import type { AxiosRequestConfig, AxiosResponse, Method } from 'axios'
 import Request from './request'
 import type { RequestConfig } from './request/types'
 import { resolveResError } from './request/helpers'
@@ -12,6 +12,7 @@ export interface IResponse<T = any> {
 // 重写返回类型
 interface HttpRequestConfig<T, R> extends RequestConfig<IResponse<R>> {
   data?: T
+  method: Method
 }
 const request = new Request({
   baseURL: import.meta.env.VITE_BASE_API,
