@@ -1,5 +1,6 @@
 import type { PluginOption } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import VueMacros from 'unplugin-vue-macros/vite'
 import unocss from 'unocss/vite'
 import devtools from 'vite-plugin-vue-devtools'
 import mkcert from 'vite-plugin-mkcert'
@@ -12,11 +13,16 @@ import imageOptimizer from './image'
 
 export function setupVitePlugins(viteEnv: ImportMetaEnv, isBuild: boolean): PluginOption[] {
   const plugins = [
-    vue({
-      script: {
-        defineModel: true,
+    VueMacros({
+      plugins: {
+        vue: vue({
+          script: {
+            defineModel: true,
+          },
+        }),
       },
     }),
+
     ...unplugins, unocss()]
   if (viteEnv.VITE_USE_MOCK)
     plugins.push(setupMockPlugin(isBuild))
