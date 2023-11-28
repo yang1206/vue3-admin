@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { DataTableColumns, PaginationProps } from 'naive-ui'
 import { NButton, NForm } from 'naive-ui'
-import { useMutation, useQueryClient } from '@tanstack/vue-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import { formatDateTime, renderIcon } from '@/utils'
-import { addPost, deletePost, updatePost, usePosts } from '@/api'
+import { addPost, deletePost, updatePost, fetchPosts } from '@/api'
 import { useUserStore } from '@/store'
 
 const userStore = useUserStore()
@@ -32,7 +32,7 @@ const queryForm = reactive({
   pageSize: 8,
 })
 const { mutate: addMutate } = useMutation({
-  mutationFn: addPost,
+  ...addPost(),
   onSuccess: () => {
     modalVisible.value = false
     window.$message?.success('新增成功')
@@ -40,7 +40,7 @@ const { mutate: addMutate } = useMutation({
 })
 
 const { mutate: updateMutate } = useMutation({
-  mutationFn: updatePost,
+  ...updatePost(),
   onSuccess: () => {
     modalVisible.value = false
     window.$message?.success('修改成功')
@@ -48,7 +48,7 @@ const { mutate: updateMutate } = useMutation({
 })
 
 const { mutate: deleteMutate } = useMutation({
-  mutationFn: deletePost,
+  ...deletePost(),
   onSuccess: () => {
     window.$message?.success('删除成功')
   },
@@ -57,10 +57,14 @@ const { mutate: deleteMutate } = useMutation({
   },
 })
 
-const { data, isLoading } = usePosts(queryForm)
+const { data, isLoading } = useQuery({
+  ...fetchPosts()
+})
 
 async function handleQuery() {
-  queryClient.refetchQueries(['posts'])
+  queryClient.refetchQueries({
+    queryKey: ['posts']
+  })
 }
 
 const columns: DataTableColumns<POST.RowData> = [
@@ -241,50 +245,36 @@ const Pagination = reactive<PaginationProps>(
       </div>
     </div>
 
-    <n-data-table
-      mt-30 :scroll-x="1200" :loading="isLoading" :columns="columns" :data="data?.pageData"
-      :bordered="false" :row-key="row => row.id"
-    />
+    <n-data-table mt-30 :scroll-x="1200" :loading="isLoading" :columns="columns" :data="data?.pageData" :bordered="false"
+      :row-key="row => row.id" />
     <div class="flex justify-end pt-10">
-      <n-pagination
-        v-bind="Pagination as any"
-      />
+      <n-pagination v-bind="Pagination as any" />
     </div>
     <!-- 新增/编辑/查看 -->
   </CommonPage>
-  <n-modal
-    v-model:show="modalVisible" preset="card" size="huge" :bordered="false" class="w-600px" :title="modalTitle"
-    :loading="isLoading"
-  >
-    <NForm
-      ref="modalFormRef" label-placement="left" label-align="left" :label-width="80" :model="modalForm"
-      :disabled="modalAction === 'view'"
-    >
+  <n-modal v-model:show="modalVisible" preset="card" size="huge" :bordered="false" class="w-600px" :title="modalTitle"
+    :loading="isLoading">
+    <NForm ref="modalFormRef" label-placement="left" label-align="left" :label-width="80" :model="modalForm"
+      :disabled="modalAction === 'view'">
       <n-form-item label="作者" path="author">
         <n-input v-model:value="modalForm.author" disabled />
       </n-form-item>
-      <n-form-item
-        label="文章标题" path="title" :rule="{
-          required: true,
-          message: '请输入文章标题',
-          trigger: ['input', 'blur'],
-        }"
-      >
+      <n-form-item label="文章标题" path="title" :rule="{
+        required: true,
+        message: '请输入文章标题',
+        trigger: ['input', 'blur'],
+      }">
         <n-input v-model:value="modalForm.title" placeholder="请输入文章标题" />
       </n-form-item>
-      <n-form-item
-        label="文章内容" path="content" :rule="{
-          required: true,
-          message: '请输入文章内容',
-          trigger: ['input', 'blur'],
-        }"
-      >
-        <n-input
-          v-model:value="modalForm.content" placeholder="请输入文章内容" type="textarea" :autosize="{
-            minRows: 3,
-            maxRows: 5,
-          }"
-        />
+      <n-form-item label="文章内容" path="content" :rule="{
+        required: true,
+        message: '请输入文章内容',
+        trigger: ['input', 'blur'],
+      }">
+        <n-input v-model:value="modalForm.content" placeholder="请输入文章内容" type="textarea" :autosize="{
+          minRows: 3,
+          maxRows: 5,
+        }" />
       </n-form-item>
     </NForm>
     <template v-if="modalAction !== 'view'" #footer>

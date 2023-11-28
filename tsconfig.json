@@ -1,22 +1,15 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "strict": true,
     "jsx": "preserve",
-    "sourceMap": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
     "lib": [
       "ESNext",
       "DOM"
     ],
-    "skipLibCheck": true,
+    "useDefineForClassFields": true,
     "baseUrl": ".",
-    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "paths": {
       "@/*": [
         "src/*"
@@ -25,13 +18,20 @@
         "./*"
       ]
     },
+    "resolveJsonModule": true,
     "types": [
       "unplugin-vue-macros/macros-global",
       "vite/client",
       "node",
       "unplugin-icons/types/vue",
       "naive-ui/volar"
-    ]
+    ],
+    "strict": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "skipLibCheck": true
 
   },
   "vueCompilerOptions": {
@@ -49,15 +49,15 @@
       // "@vue-macros/volar/export-render",
     ]
   },
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.js"
-  ],
   "include": [
     "**/*.tsx",
     "**/*.ts",
     "**/*.vue"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.js"
   ]
 
 }

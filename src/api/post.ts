@@ -1,55 +1,42 @@
-import { useQuery } from '@tanstack/vue-query'
+import { queryOptions } from '@tanstack/vue-query'
 import request from '@/service'
 
-export function getPosts(data?: any) {
-  return request<unknown, POST.IPostsData>({
-    url: 'posts',
-    method: 'GET',
-    data,
+export function fetchPosts(data?: any) {
+  return queryOptions({
+    queryKey: [data,'posts'],
+    queryFn: async () => (await request.get<IAxiosResponseData<POST.IPostsData>>('posts')).data
   })
 }
 
-export function usePosts(query: any) {
-  return useQuery(['posts'], async () => {
-    const response = await getPosts(query)
-    return response.data
+
+export function fetchPostById(id: string) {
+  return queryOptions({
+    queryKey: [id,'post'],
+    queryFn: async () => await request.get(`/post/${id}`)
   })
 }
 
-export function getPostById(id: string) {
-  return request<unknown, any>({
-    url: `/post/${id}`,
-    method: 'GET',
-  })
+
+
+export function addPost( ) {
+  return {
+    mutationKey: ['post'],
+    mutationFn: async (data: {
+      author: string
+      title: string
+      content: string
+    }) => (await request.post('/post', data))
+  }
 }
 
-export function addPost(data: {
-  author: string
-  title: string
-  content: string
-}) {
-  return request<{
-    author: string
-    title: string
-    content: string
-  }, any>({
-    url: '/post',
-    method: 'POST',
-    data,
-  })
+export function updatePost() {
+  return {
+    mutationFn: async (data: any) => (await request.put(`/post/${data.id}`))
+  }
 }
 
-export function updatePost(data: any) {
-  return request<unknown, any>({
-    url: `/post/${data.id}`,
-    method: 'PUT',
-    data,
-  })
-}
-
-export function deletePost(id: number) {
-  return request<unknown, any>({
-    url: `/post/${id}`,
-    method: 'DELETE',
-  })
+export function deletePost() {
+  return {
+    mutationFn: async (id: number) => (await request.delete(`/post/${id}`))
+  }
 }

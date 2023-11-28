@@ -1,29 +1,28 @@
-import type { AxiosRequestConfig, AxiosResponse, Method } from 'axios'
+import qs from 'qs'
+import type { VueQueryPluginOptions } from '@tanstack/vue-query'
 import Request from './request'
-import type { RequestConfig } from './request/types'
-import { resolveResError } from './request/helpers'
+import { showRequestError } from './request/helpers'
+import { DefaultBaseUrl, DefaultHeaders } from '@/constants'
 import { getToken } from '@/utils'
 
-export interface IResponse<T = any> {
-  data: T
-  message: string
-  status: number
-}
-// 重写返回类型
-interface HttpRequestConfig<T, R> extends RequestConfig<IResponse<R>> {
-  data?: T
-  method: Method
-}
 const request = new Request({
-  baseURL: import.meta.env.VITE_BASE_API,
-  timeout: 1000 * 60 * 5,
-  // withCredentials: true,
-  // headers: {
-  //   'Content-Type': 'application/x-www-form-urlencoded',
-  // },
+  baseURL: DefaultBaseUrl,
+  timeout: 1000 * 60 * 4,
+  withCredentials: false,
+  paramsSerializer: (params: any) => {
+    const query = qs.stringify(
+      Object.fromEntries(
+        Object.entries(params).filter(
+          ([, v]) => !['undefined', 'null', undefined, null].includes((v as any)?.toString() ?? v),
+        ),
+      ),
+    )
+
+    return query
+  },
   interceptors: {
     // 请求拦截器
-    requestInterceptors: (config: AxiosRequestConfig) => {
+    requestInterceptors: (config: IAxiosRequestConfig) => {
       const token = getToken()
       if (!token) {
         // TODO
@@ -37,41 +36,37 @@ const request = new Request({
         }
         else { config.headers = { Authorization } }
       }
+
+      config.headers = {
+        ...DefaultHeaders,
+        ...config.headers,
+      }
       return config
     },
     // 响应拦截器
-    responseInterceptors: (result: AxiosResponse) => {
+    responseInterceptors: (result: IAxiosResponse) => {
+      if (!(result?.data?.code === 0)) {
+        if (result?.config?.showError ?? true) {
+          showRequestError({
+            response: result,
+            error: result?.data as unknown as IAxiosError,
+            type: result.config?.showErrorType,
+          })
+        }
+      }
       return result
-    },
-    responseInterceptorsCatch: (error) => {
-      const message = resolveResError(error.response.status, error.response.data.message)
-      window.$message?.error(message)
-      return Promise.reject(new Error(error.response.data))
     },
   },
 })
 
-/**
- * @description: 函数的描述
- * @generic D 请求参数
- * @generic T 响应结构
- * @param {HttpRequestConfig} config 不管是GET还是POST请求都使用data
- * @returns {Promise}
- */
-function HttpRequest<D = any, T = any>(config: HttpRequestConfig<D, T>) {
-  const { method = 'GET' } = config
-  if (method === 'get' || method === 'GET')
-    config.params = config.data
+export default request
 
-  return request.request<IResponse<T>>(config)
+export const vueQueryPluginOptions: VueQueryPluginOptions = {
+  queryClientConfig: {
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+      },
+    },
+  },
 }
-// 取消请求
-export function cancelRequest(url: string | string[]) {
-  return request.cancelRequest(url)
-}
-// 取消全部请求
-export function cancelAllRequest() {
-  return request.cancelAllRequest()
-}
-
-export default HttpRequest

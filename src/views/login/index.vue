@@ -5,12 +5,31 @@ import { getLocal, removeLocal, setLocal, setToken } from '@/utils'
 import bgImg from '@/assets/images/login_bg.webp'
 import { addDynamicRoutes } from '@/router'
 import ThemeMode from '@/layout/header/components/ThemeMode.vue'
-
+import { useMutation } from '@tanstack/vue-query'
 const title: string = import.meta.env.VITE_APP_TITLE
 
 const router = useRouter()
 const route = useRoute()
 const query = route.query
+const { mutate } = useMutation({
+  ...login(),
+  onSuccess:async (res:any)=>{
+    
+    window.$notification?.success({ title: '登录成功！', duration: 2500 })
+    setToken(res.data.token)
+    
+
+    await addDynamicRoutes()
+    if (query.redirect) {
+      const path = query.redirect as string
+      Reflect.deleteProperty(query, 'redirect')
+      router.push({ path, query })
+    }
+    else {
+      router.push('/')
+    }
+  }
+})
 
 interface LoginInfo {
   phone: string
@@ -38,23 +57,11 @@ async function handleLogin() {
   }
   try {
     loging.value = true
-    const res: any = await login({ phone, password: password.toString() })
-    window.$notification?.success({ title: '登录成功！', duration: 2500 })
-    setToken(res.data.token)
+    mutate({ phone, password: password.toString() })
     if (isRemember.value)
       setLocal('loginInfo', { phone, password })
     else
-      removeLocal('loginInfo')
-
-    await addDynamicRoutes()
-    if (query.redirect) {
-      const path = query.redirect as string
-      Reflect.deleteProperty(query, 'redirect')
-      router.push({ path, query })
-    }
-    else {
-      router.push('/')
-    }
+      removeLocal('loginInfo')    
   }
   catch (error) {
     console.error(error)
@@ -77,28 +84,16 @@ async function handleLogin() {
           <icon-custom-logo class="mr-30 text-50 color-primary" />{{ title }}
         </h5>
         <div mt-30>
-          <n-input
-            v-model:value="loginInfo.phone"
-            autofocus
-            class="h-50 items-center pl-10 text-16"
-            placeholder="admin"
-            :maxlength="20"
-          />
+          <n-input v-model:value="loginInfo.phone" autofocus class="h-50 items-center pl-10 text-16" placeholder="admin"
+            :maxlength="20" />
         </div>
         <div mt-30>
-          <n-input
-            v-model:value="loginInfo.password"
-            class="h-50 items-center pl-10 text-16"
-            type="password"
-            show-password-on="mousedown"
-            placeholder="123456"
-            :maxlength="20"
-            @keydown.enter="handleLogin"
-          />
+          <n-input v-model:value="loginInfo.password" class="h-50 items-center pl-10 text-16" type="password"
+            show-password-on="mousedown" placeholder="123456" :maxlength="20" @keydown.enter="handleLogin" />
         </div>
 
         <div mt-20>
-          <n-checkbox :checked="isRemember" label="记住我" :on-update:checked="(val:boolean) => (isRemember = val)" />
+          <n-checkbox :checked="isRemember" label="记住我" :on-update:checked="(val: boolean) => (isRemember = val)" />
         </div>
 
         <div mt-20>

@@ -7,10 +7,13 @@ import {
   formatDateTime,
   isNullOrUndef,
 } from '@/utils'
-import { getPosts } from '@/api'
+import { fetchPosts } from '@/api'
+import { useQuery } from '@tanstack/vue-query';
 
 const queryForm = reactive({
   title: '',
+  page: 1,
+  pageSize: 10,
 })
 
 // 发布
@@ -64,13 +67,21 @@ const columns = useColumns<POST.RowData>([
   },
 ])
 
+const { refetch, } = useQuery(computed(() => {
+  return {
+    ...fetchPosts(queryForm)
+  }
+}))
+
 const table = defineTable<POST.RowData[]>({
   request: async ({ page, pageSize }) => {
-    const rawdata = await getPosts({ page, pageSize, title: queryForm.title })
+    queryForm.page = page
+    queryForm.pageSize = pageSize
+    const data = await refetch()
     return {
-      data: rawdata.data.pageData,
-      total: rawdata.data.total,
-    }
+      data: data.data?.pageData,
+      total: data.data?.total,
+    } as any
   },
   pagination: { pageSize: 10 },
   // 默认开始请求第一页

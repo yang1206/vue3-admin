@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { removeToken, toLogin } from '@/utils'
 import { usePermissionStore, useTabStore } from '@/store'
 import { resetRouter } from '@/router'
-import { getUser } from '@/api'
+import { fetchUser } from '@/api'
 
 export type Role = 0 | 1 | 2
 interface UserInfo {
@@ -38,7 +38,8 @@ export const useUserStore = defineStore('user', {
   actions: {
     async getUserInfo() {
       try {
-        const res: any = await getUser()
+        const res: any = await fetchUser()
+
         if (res.code === 0) {
           const { id, name, avatar, isAdmin } = res.data
           this.userInfo = { id, name, avatar, role: isAdmin }

@@ -1,27 +1,28 @@
 import process from 'node:process'
-import type { ConfigEnv } from 'vite'
-import { loadEnv } from 'vite'
+import type { UserConfig } from 'vite'
+import { loadEnv, mergeConfig } from 'vite'
 import { defineConfig } from 'vitest/config'
 import { createViteProxy } from './build/config'
 import { setupVitePlugins } from './build/plugins'
 import { convertEnv, getRootPath, getSrcPath } from './build/utils'
 
-export default defineConfig((configEnv: ConfigEnv) => {
+export default defineConfig((configEnv) => {
   const srcPath = getSrcPath()
   const rootPath = getRootPath()
   const isBuild = configEnv.command === 'build'
   const viteEnv = convertEnv(loadEnv(configEnv.mode, process.cwd()))
   const { VITE_PORT, VITE_USE_PROXY, VITE_PROXY_TYPE } = viteEnv
 
-  return {
+  const userConfig: UserConfig = {
     plugins: setupVitePlugins(viteEnv, isBuild),
     server: {
       host: '0.0.0.0',
       port: Number(VITE_PORT),
       open: false,
-      https: !!viteEnv.VITE_MKERT,
       proxy: createViteProxy(VITE_USE_PROXY, VITE_PROXY_TYPE as ProxyType),
     },
+  }
+  return mergeConfig(userConfig, {
     build: {
       reportCompressedSize: false,
       sourcemap: false,
@@ -40,5 +41,5 @@ export default defineConfig((configEnv: ConfigEnv) => {
     test: {
       environment: 'jsdom',
     },
-  }
+  })
 })
