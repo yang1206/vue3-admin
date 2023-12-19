@@ -62,5 +62,5 @@
     "jsonc",
     "yaml"
   ],
-  "vue.codeActions.enabled": false,
+  "vue.codeActions.enabled": true
 }
