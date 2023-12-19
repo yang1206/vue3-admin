@@ -1,7 +1,6 @@
-
 /// <reference types="vite/client" />
 
-type ProxyType = 'dev' | 'test' | 'prod';
+type ProxyType = 'dev' | 'test' | 'prod'
 
 interface ProxyConfig {
   /** 匹配代理的前缀，接口地址匹配到此前缀将代理的target地址 */
@@ -25,11 +24,12 @@ interface ImportMetaEnv {
   readonly VITE_VISUALIZER?: boolean
   readonly VITE_IMAGE_OPTIMIZER?: boolean
   readonly VITE_DEVTOOL?: boolean
+  readonly VITE_CHECKER?: boolean
+  readonly VITE_LEGACY?: boolean
   /**
    * 为开发服务器提供 https 支持
    */
   readonly VITE_MKERT?: boolean
-
 
   readonly VITE_COMPRESS_TYPE?: 'gzip' | 'brotliCompress' | 'deflate' | 'deflateRaw'
   // 更多环境变量...
@@ -41,6 +41,7 @@ interface ImportMeta {
 
 declare module '*.vue' {
   import type { DefineComponent } from 'vue'
+
   const component: DefineComponent<{}, {}, any>
   export default component
 }

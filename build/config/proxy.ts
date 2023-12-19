@@ -11,6 +11,12 @@ export function createViteProxy(isUseProxy: boolean | 'true' | 'false' = true, p
       target: proxyConfig.target,
       changeOrigin: true,
       rewrite: (path: string) => path.replace(new RegExp(`^${proxyConfig.prefix}`), '/'),
+      configure: (proxy, options) => {
+        // 配置此项可在响应头中看到请求的真实地址
+        proxy.on('proxyRes', (proxyRes, req) => {
+          proxyRes.headers['x-real-url'] = new URL(req.url || '', options?.target as string)?.href || ''
+        })
+      },
     },
   }
   return proxy

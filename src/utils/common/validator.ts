@@ -11,7 +11,7 @@ export const validatePassword = (password: string) => PasswordRegExp.test(passwo
 export const validatePhoneNumber = (phoneNumber: string) => PhoneNumberRegExp.test(phoneNumber)
 
 /** 校验日期 */
-export const validateDate = (date: any, format?: string) => dayjs(date, format).isValid()
+export const validateDate = (date: dayjs.ConfigType, format?: string) => dayjs(date, format).isValid()
 
 /** 校验邮箱 */
 export const validateEmail = (email: string) => EmailRegExp.test(email)

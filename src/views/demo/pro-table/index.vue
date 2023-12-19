@@ -3,12 +3,12 @@ import { NProTable, defineTable, useColumns } from 'naive-ui-pro-components'
 import {
   NSwitch,
 } from 'naive-ui'
+import { useQuery } from '@tanstack/vue-query'
 import {
   formatDateTime,
   isNullOrUndef,
 } from '@/utils'
 import { fetchPosts } from '@/api'
-import { useQuery } from '@tanstack/vue-query';
 
 const queryForm = reactive({
   title: '',
@@ -67,9 +67,9 @@ const columns = useColumns<POST.RowData>([
   },
 ])
 
-const { refetch, } = useQuery(computed(() => {
+const { refetch } = useQuery(computed(() => {
   return {
-    ...fetchPosts(queryForm)
+    ...fetchPosts(queryForm),
   }
 }))
 

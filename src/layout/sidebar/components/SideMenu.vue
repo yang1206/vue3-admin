@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import type { MenuInst, MenuOption } from 'naive-ui'
 import type { Meta, RouteType } from '~/typings/router'
-import { useAppStore, usePermissionStore, useThemeStore } from '@/store'
+import { useAppStore, usePermissionStore, useTabStore } from '@/store'
 import { isUrl, renderCustomIcon, renderIcon } from '@/utils'
 
 const router = useRouter()
 const currentRoute = useRoute()
 const permissionStore = usePermissionStore()
-const themeStore = useThemeStore()
 const appStore = useAppStore()
+const tabStore = useTabStore()
 
 const menu = ref<MenuInst>()
 watch(currentRoute, async () => {
@@ -58,7 +58,7 @@ function getMenuItem(route: RouteType, basePath = ''): MenuItem {
   if (!visibleChildren.length)
     return menuItem
 
-  if (visibleChildren.length === 1) {
+  if (visibleChildren.length === 1 && route.meta?.isCollapseSingleMenu) {
     // 单个子路由处理
     const singleRoute = visibleChildren[0]
     menuItem = {
@@ -81,7 +81,7 @@ function getMenuItem(route: RouteType, basePath = ''): MenuItem {
   else {
     menuItem.children = visibleChildren
       .map(item => getMenuItem(item, menuItem.path))
-      // .sort((a, b) => a.order - b.order)
+    // .sort((a, b) => a.order - b.order)
   }
 
   return menuItem
@@ -102,12 +102,12 @@ function handleMenuSelect(key: string, item: MenuOption) {
     return
   }
   if (menuItem.path === currentRoute.path && !currentRoute.meta?.keepAlive)
-    appStore.reloadPage()
+    tabStore.reloadTab(menuItem.path)
   else
     router.push(menuItem.path)
 
   // 手机端自动收起菜单
-  themeStore.isMobile && themeStore.setCollapsed(true)
+  appStore.isMobile && appStore.setCollapsed(true)
 }
 </script>
 
@@ -131,9 +131,10 @@ function handleMenuSelect(key: string, item: MenuOption) {
 .side-menu:not(.n-menu--collapsed) {
   .n-menu-item-content {
     &::before {
-      left: 5px;
       right: 5px;
+      left: 5px;
     }
+
     &.n-menu-item-content--selected,
     &:hover {
       &::before {

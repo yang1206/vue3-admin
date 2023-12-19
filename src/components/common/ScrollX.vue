@@ -93,46 +93,47 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 .wrapper {
-  display: flex;
-
-  z-index: 9;
-  overflow: hidden;
   position: relative;
+  z-index: 9;
+  display: flex;
+  overflow: hidden;
+
   .content {
-    padding: 0 10px;
     display: flex;
-    align-items: center;
     flex-wrap: nowrap;
+    align-items: center;
+    padding: 0 10px;
     transition: transform 0.5s;
+
     &.overflow {
-      padding-left: 30px;
       padding-right: 30px;
+      padding-left: 30px;
     }
   }
+
   .left,
   .right {
-    background-color: #fff;
     position: absolute;
     top: 0;
     bottom: 0;
-    margin: auto;
-
-    width: 20px;
-    height: 35px;
+    z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
-
+    width: 20px;
+    height: 35px;
+    margin: auto;
     font-size: 18px;
+    cursor: pointer;
+    background-color: #fff;
     border: 1px solid #e0e0e6;
     border-radius: 2px;
-
-    z-index: 2;
-    cursor: pointer;
   }
+
   .left {
     left: 0;
   }
+
   .right {
     right: 0;
   }

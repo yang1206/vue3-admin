@@ -3,7 +3,7 @@ import type { VueQueryPluginOptions } from '@tanstack/vue-query'
 import Request from './request'
 import { showRequestError } from './request/helpers'
 import { DefaultBaseUrl, DefaultHeaders } from '@/constants'
-import { getToken } from '@/utils'
+import { useAuthStore } from '@/store'
 
 const request = new Request({
   baseURL: DefaultBaseUrl,
@@ -12,8 +12,8 @@ const request = new Request({
   paramsSerializer: (params: any) => {
     const query = qs.stringify(
       Object.fromEntries(
-        Object.entries(params).filter(
-          ([, v]) => !['undefined', 'null', undefined, null].includes((v as any)?.toString() ?? v),
+        Object.entries(params as object).filter(
+          ([, v]) => !['undefined', 'null', undefined, null].includes((v as string)?.toString() ?? v),
         ),
       ),
     )
@@ -23,23 +23,20 @@ const request = new Request({
   interceptors: {
     // 请求拦截器
     requestInterceptors: (config: IAxiosRequestConfig) => {
-      const token = getToken()
+      const authStore = useAuthStore()
+      const token = authStore.getToken
       if (!token) {
-        // TODO
+        authStore.logout()
       }
 
       else {
-        const Authorization = config.headers?.Authorization || `${token}`
-        if (config.headers) {
-          config.headers.Authorization = config.headers.Authorization || `${token}`
-          config.headers.token = config.headers.Authorization || `${token}`
+        config.headers = {
+          ...DefaultHeaders,
+          'token': token,
+          'X-Token': token,
+          'X-Access-Token': token,
+          ...config.headers,
         }
-        else { config.headers = { Authorization } }
-      }
-
-      config.headers = {
-        ...DefaultHeaders,
-        ...config.headers,
       }
       return config
     },

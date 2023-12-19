@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useUserStore } from '@/store'
+import { useAuthStore, useUserStore } from '@/store'
 import { renderIcon } from '@/utils'
 
 const userStore = useUserStore()
-
+const { logout } = useAuthStore()
 const options = [
   {
     label: '退出登录',
@@ -20,7 +20,7 @@ function handleSelect(key: string) {
       positiveText: '确定',
       negativeText: '取消',
       onPositiveClick() {
-        userStore.logout()
+        logout()
         window.$message?.success('已退出登录!')
       },
     })

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { useAppStore } from '@/store'
+import { useTabStore } from '@/store'
 
-const appStore = useAppStore()
+const tabStore = useTabStore()
 </script>
 
 <template>
   <router-view v-slot="{ Component, route }">
-    <component :is="Component" v-if="appStore.reloadFlag" :key="route.path" />
+    <component :is="Component" v-if="tabStore.reloading" :key="route.path" />
   </router-view>
 </template>

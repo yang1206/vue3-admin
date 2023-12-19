@@ -9,6 +9,7 @@ export default {
   redirect: '/workbench',
   meta: {
     order: 0,
+    isCollapseSingleMenu: true,
   },
   children: [
     {

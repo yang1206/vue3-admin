@@ -1,6 +1,6 @@
 import type { AxiosError, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 
-interface IAxiosResponseData_<T = unknown> {
+export interface IAxiosResponseData_<T = unknown> {
   code: number
   msg: string
   status: boolean

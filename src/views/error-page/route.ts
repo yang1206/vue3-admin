@@ -11,6 +11,7 @@ export default {
     title: 'ErrorPage',
     order: 99,
     icon: 'mdi:alert-circle-outline',
+    isCollapseSingleMenu: true,
   },
   children: [
     {

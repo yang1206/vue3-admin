@@ -2,9 +2,11 @@ import process from 'node:process'
 import type { UserConfig } from 'vite'
 import { loadEnv, mergeConfig } from 'vite'
 import { defineConfig } from 'vitest/config'
+import checker from 'vite-plugin-checker'
 import { createViteProxy } from './build/config'
 import { setupVitePlugins } from './build/plugins'
 import { convertEnv, getRootPath, getSrcPath } from './build/utils'
+import { dependencies } from './package.json'
 
 export default defineConfig((configEnv) => {
   const srcPath = getSrcPath()
@@ -21,6 +23,7 @@ export default defineConfig((configEnv) => {
       open: false,
       proxy: createViteProxy(VITE_USE_PROXY, VITE_PROXY_TYPE as ProxyType),
     },
+
   }
   return mergeConfig(userConfig, {
     build: {
@@ -30,7 +33,11 @@ export default defineConfig((configEnv) => {
       commonjsOptions: {
         ignoreTryCatch: false,
       },
-
+      
+    },
+    optimizeDeps: {
+      include: Object.keys(dependencies),
+      exclude: ['vue-demi'],
     },
     resolve: {
       alias: {

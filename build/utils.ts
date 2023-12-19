@@ -1,7 +1,8 @@
 import path from 'node:path'
+import process from 'node:process'
 
 /**
- * * 项目根路径
+ * 项目根路径
  * @descrition 结尾不带/
  */
 export function getRootPath() {
@@ -9,7 +10,7 @@ export function getRootPath() {
 }
 
 /**
- * * 项目src路径
+ * 项目src路径
  * @param srcName src目录名称(默认: "src")
  * @descrition 结尾不带斜杠
  */
@@ -18,24 +19,25 @@ export function getSrcPath(srcName = 'src') {
 }
 
 /**
- * * 转换env配置
+ * 转换env配置
  * @param envOptions
  * @descrition boolean和数字类型转换
  */
-export function convertEnv(envOptions: Record<string, any>): ImportMetaEnv {
-  const result: any = {}
+export function convertEnv(envOptions: Record<string, unknown>): ImportMetaEnv {
+  const result = {} as ImportMetaEnv
   if (!envOptions)
     return result
 
   for (const envKey in envOptions) {
     let envVal = envOptions[envKey]
-    if (['true', 'false'].includes(envVal))
+    if (['true', 'false'].includes(envVal as string))
       envVal = envVal === 'true'
 
     if (['VITE_PORT'].includes(envKey))
-      envVal = +envVal
+      envVal = +(envVal as string)
 
-    result[envKey] = envVal
+    // eslint-disable-next-line ts/no-unsafe-assignment
+    result[envKey] = envVal as any
   }
   return result
 }

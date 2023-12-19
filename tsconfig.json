@@ -32,7 +32,6 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "skipLibCheck": true
-
   },
   "vueCompilerOptions": {
     "plugins": [

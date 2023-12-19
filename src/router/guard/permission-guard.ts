@@ -1,10 +1,13 @@
 import type { Router } from 'vue-router'
-import { getToken, isNullOrWhitespace, refreshAccessToken } from '@/utils'
+import { isNullOrWhitespace } from '@/utils'
+import { useAuthStore } from '@/store'
 
 const WHITE_LIST = ['/login']
 export function createPermissionGuard(router: Router) {
   router.beforeEach(async (to) => {
-    const token = getToken()
+    const authStore = useAuthStore()
+
+    const token = authStore.getToken
 
     /** 没有token的情况 */
     if (isNullOrWhitespace(token)) {
@@ -18,7 +21,6 @@ export function createPermissionGuard(router: Router) {
     if (to.path === '/login')
       return { path: '/' }
 
-    refreshAccessToken()
     return true
   })
 }

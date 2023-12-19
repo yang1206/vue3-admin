@@ -19,7 +19,7 @@ export function getLocal<T>(key: string) {
   if (json) {
     let storageData: StorageData | null = null
     try {
-      storageData = decrypto(json)
+      storageData = decrypto(json) as StorageData
     }
     catch {}
     if (storageData) {
@@ -39,7 +39,7 @@ export function getLocalExpire(key: string): number | null {
   if (json) {
     let storageData: StorageData | null = null
     try {
-      storageData = decrypto(json)
+      storageData = decrypto(json) as StorageData
     }
     catch {}
     if (storageData) {
@@ -57,4 +57,13 @@ export function removeLocal(key: string) {
 
 export function clearLocal() {
   window.localStorage.clear()
+}
+
+export const localCryptoStorage = {
+  getItem(key: string) {
+    return getLocal(key)
+  },
+  setItem(key: string, value: string) {
+    setLocal(key, value)
+  },
 }

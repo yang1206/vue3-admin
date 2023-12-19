@@ -24,3 +24,12 @@ export function removeSession(key: string) {
 export function clearSession() {
   window.sessionStorage.clear()
 }
+
+export const sessionCryptoStorage = {
+  getItem(key: string) {
+    return getSession(key)
+  },
+  setItem(key: string, value: string) {
+    setSession(key, value)
+  },
+}

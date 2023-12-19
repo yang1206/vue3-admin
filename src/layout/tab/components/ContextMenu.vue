@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAppStore, useTabStore } from '@/store'
+import { useTabStore } from '@/store'
 import { renderIcon } from '@/utils'
 
 interface Props {
@@ -17,8 +17,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits(['update:show'])
 
 const tabStore = useTabStore()
-const appStore = useAppStore()
-
+const route = useRoute()
 const options = computed(() => [
   {
     label: '重新加载',
@@ -65,7 +64,7 @@ const actionMap = new Map([
   [
     'reload',
     () => {
-      appStore.reloadPage()
+      tabStore.reloadTab(route.fullPath, route.meta.keepAlive ?? false)
     },
   ],
   [

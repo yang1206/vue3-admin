@@ -34,7 +34,7 @@ export const MultipartFormDataHeaders = {
   'Content-Type': 'multipart/form-data',
 }
 /** 登录态键 */
-export const TokenKey = `token${PascalCaseViteMode}`
+export const TOKEN_CODE = 'access_token'
 /** 默认登录态 */
 export const DefaultToken = ''
 /** 每页条目键 */

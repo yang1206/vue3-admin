@@ -47,6 +47,11 @@ export default defineConfig({
       'icon-btn',
       'inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:opacity-100 hover:text-teal-600',
     ],
+    ['card-border', 'border border-solid border-light_border dark:border-dark_border'],
+    ['auto-bg', 'bg-white dark:bg-dark'],
+    ['auto-bg-hover', 'hover:bg-#eaf0f1 hover:dark:bg-#1b2429'],
+    ['auto-bg-highlight', 'bg-#eaf0f1 dark:bg-#1b2429'],
+    ['text-highlight', 'rounded-4 px-8 py-2 auto-bg-highlight'],
   ],
   rules: [
     [/^bc-(.+)$/, ([, color]) => ({ 'border-color': `#${color}` })],
@@ -93,6 +98,8 @@ export default defineConfig({
       error_pressed: 'var(--error-color-pressed)',
       error_active: 'var(--error-color-active)',
       dark: '#18181c',
+      light_border: '#efeff5',
+      dark_border: '#2d2d30',
     },
   },
 })

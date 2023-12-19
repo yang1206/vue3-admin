@@ -4,7 +4,7 @@ import { NLoadingBarProvider, NNotificationProvider, dateZhCN, useDialog, useLoa
 import { useCssVar } from '@vueuse/core'
 import type { GlobalThemeOverrides } from 'naive-ui'
 import { NGlobalDialog, NGlobalMessage, NInstallProvider } from 'naive-ui-pro-components'
-import { useThemeStore } from '@/store'
+import { useAppStore } from '@/store'
 
 // 挂载naive组件的方法至window, 以便在全局使用
 function setupNaiveTools() {
@@ -24,7 +24,7 @@ const NaiveProviderContent = defineComponent({
   },
 })
 
-const themStore = useThemeStore()
+const appStore = useAppStore()
 
 type ThemeVars = Exclude<GlobalThemeOverrides['common'], undefined>
 type ThemeVarsKeys = keyof ThemeVars
@@ -42,7 +42,7 @@ type ThemeVarsKeys = keyof ThemeVars
 // )
 
 function setupCssVar() {
-  const common = themStore.naiveThemeOverrides.common
+  const common = appStore.naiveThemeOverrides.common
   for (const key in common) {
     useCssVar(`--${kebabCase(key)}`, document.documentElement).value = common[key as ThemeVarsKeys] || ''
     if (key === 'primaryColor')
@@ -50,7 +50,7 @@ function setupCssVar() {
   }
 }
 function handleWindowResize() {
-  themStore.setIsMobile(document.body.offsetWidth <= 640)
+  appStore.setIsMobile(document.body.offsetWidth <= 640)
 }
 onMounted(() => {
   handleWindowResize()
@@ -65,8 +65,8 @@ onBeforeUnmount(() => {
   <n-config-provider
     :locale="zhCN" :date-locale="dateZhCN"
     wh-full
-    :theme-overrides="themStore.naiveThemeOverrides"
-    :theme="themStore.naiveTheme"
+    :theme-overrides="appStore.naiveThemeOverrides"
+    :theme="appStore.naiveTheme"
   >
     <NInstallProvider
       :install="[

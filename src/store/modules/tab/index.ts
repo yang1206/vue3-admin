@@ -7,6 +7,7 @@ export interface TabItem {
   name: string
   path: string
   title?: string
+  keepAlive?: boolean
 }
 
 export const useTabStore = defineStore('tab', {
@@ -14,10 +15,12 @@ export const useTabStore = defineStore('tab', {
     return {
       tabs: <Array<TabItem>> tabs || [],
       activeTab: <string> activeTab || '',
+      reloading: <boolean> true,
     }
   },
   actions: {
-    setActiveTab(path: string) {
+    async setActiveTab(path: string) {
+      await nextTick()
       this.activeTab = path
       setSession('activeTab', path)
     },
@@ -33,7 +36,23 @@ export const useTabStore = defineStore('tab', {
         return
       this.setTabs([...this.tabs, tab])
     },
-    removeTab(path: string) {
+    async reloadTab(path: string, keepAlive?: boolean) {
+      const findItem = this.tabs.find(item => item.path === path)
+      if (!findItem)
+        return
+      if (keepAlive)
+        findItem.keepAlive = false
+      window.$loadingBar?.start()
+      this.reloading = false
+      await nextTick()
+      this.reloading = true
+      findItem.keepAlive = !!keepAlive
+      setTimeout(() => {
+        document.documentElement.scrollTo({ left: 0, top: 0 })
+        window.$loadingBar?.finish()
+      }, 100)
+    },
+    async removeTab(path: string) {
       if (path === this.activeTab) {
         const activeIndex = this.tabs.findIndex(item => item.path === path)
         if (activeIndex > 0)

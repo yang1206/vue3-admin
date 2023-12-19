@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import ContextMenu from './components/ContextMenu.vue'
 import type { TabItem } from '@/store'
-import { useTabStore, useThemeStore } from '@/store'
+import { useAppStore, useTabStore } from '@/store'
 import ScrollX from '@/components/common/ScrollX.vue'
 
 const route = useRoute()
 const router = useRouter()
 const tabStore = useTabStore()
-const useTheme = useThemeStore()
+const appStore = useAppStore()
 
 interface ContextMenuOption {
   show: boolean
@@ -59,7 +59,7 @@ async function handleContextMenu(e: MouseEvent, tabItem: TabItem) {
 </script>
 
 <template>
-  <ScrollX bg-white dark:bg-dark :style="{ height: `${useTheme.tab.height}px` }">
+  <ScrollX bg-white dark:bg-dark :style="{ height: `${appStore.tab.height}px` }">
     <n-tag
       v-for="tab in tabStore.tabs"
       :key="tab.path"
@@ -85,11 +85,11 @@ async function handleContextMenu(e: MouseEvent, tabItem: TabItem) {
 <style lang="scss">
 .n-tag__close {
   box-sizing: content-box;
-  border-radius: 50%;
-  font-size: 12px;
   padding: 2px;
-  transform: scale(.9);
+  font-size: 12px;
+  border-radius: 50%;
+  transition: all 00.3s;
+  transform: scale(0.9);
   transform: translateX(5px);
-  transition: all 0.3s;
 }
 </style>

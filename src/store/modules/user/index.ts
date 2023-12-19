@@ -1,7 +1,4 @@
 import { defineStore } from 'pinia'
-import { removeToken, toLogin } from '@/utils'
-import { usePermissionStore, useTabStore } from '@/store'
-import { resetRouter } from '@/router'
 import { fetchUser } from '@/api'
 
 export type Role = 0 | 1 | 2
@@ -53,16 +50,7 @@ export const useUserStore = defineStore('user', {
         return Promise.reject(error)
       }
     },
-    async logout() {
-      const { resetTabs } = useTabStore()
-      const { resetPermission } = usePermissionStore()
-      removeToken()
-      resetPermission()
-      resetTabs()
-      resetRouter()
-      this.$reset()
-      toLogin()
-    },
+
     setUserInfo(userInfo = {}) {
       this.userInfo = { ...this.userInfo, ...userInfo }
     },

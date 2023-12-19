@@ -12,9 +12,9 @@ import { setupDirectives } from '@/directives'
 
 async function setupApp() {
   const app = createApp(App)
-  await setupStore(app)
-  await setupRouter(app)
+  setupStore(app)
   setupDirectives(app)
+  await setupRouter(app)
 
   app.use(browserUpdatePlugin)
     .use(dayjsPlugin)

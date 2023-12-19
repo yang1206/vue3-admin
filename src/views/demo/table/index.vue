@@ -3,7 +3,7 @@ import type { DataTableColumns, PaginationProps } from 'naive-ui'
 import { NButton, NForm } from 'naive-ui'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import { formatDateTime, renderIcon } from '@/utils'
-import { addPost, deletePost, updatePost, fetchPosts } from '@/api'
+import { addPost, deletePost, fetchPosts, updatePost } from '@/api'
 import { useUserStore } from '@/store'
 
 const userStore = useUserStore()
@@ -29,7 +29,7 @@ const modalTitle = computed(() => `${ACTIONS[modalAction.value]}文章`)
 const queryForm = reactive({
   title: '',
   pageNum: 1,
-  pageSize: 8,
+  pageSize: 10,
 })
 const { mutate: addMutate } = useMutation({
   ...addPost(),
@@ -57,13 +57,15 @@ const { mutate: deleteMutate } = useMutation({
   },
 })
 
-const { data, isLoading } = useQuery({
-  ...fetchPosts()
-})
+const { data, isLoading } = useQuery(computed(() => {
+  return {
+    ...fetchPosts(queryForm),
+  }
+}))
 
 async function handleQuery() {
   queryClient.refetchQueries({
-    queryKey: ['posts']
+    queryKey: ['posts'],
   })
 }
 
@@ -135,8 +137,7 @@ const columns: DataTableColumns<POST.RowData> = [
 async function handleReset() {
   queryForm.title = ''
   queryForm.pageNum = 1
-  queryForm.pageSize = 8
-  handleQuery()
+  queryForm.pageSize = 10
 }
 
 function handleAdd() {
@@ -187,27 +188,25 @@ function handleDelete(id: number) {
   })
 }
 
-const Pagination = reactive<PaginationProps>(
+const Pagination = reactive(
   {
     page: queryForm.pageNum,
     pageSize: queryForm.pageSize,
-    itemCount: data.value?.total,
-    pageSizes: [8, 16, 30, 40],
+    showSizePicker: true,
+    pageSizes: [10, 20, 30, 40],
+    itemCount: 60,
     showQuickJumper: true,
     prefix: () => {
       return h('span', `共${data.value?.total}条`)
     },
-    onUpdatePage: async (page: number) => {
+    onChange: (page: number) => {
       Pagination.page = page
       queryForm.pageNum = page
-      await handleQuery()
     },
-    // itemCount: data.value?.total,
     onUpdatePageSize: async (pageSize: number) => {
       Pagination.pageSize = pageSize
       queryForm.pageSize = pageSize
       queryForm.pageNum = 1
-      await handleQuery()
     },
   },
 )
@@ -245,36 +244,46 @@ const Pagination = reactive<PaginationProps>(
       </div>
     </div>
 
-    <n-data-table mt-30 :scroll-x="1200" :loading="isLoading" :columns="columns" :data="data?.pageData" :bordered="false"
-      :row-key="row => row.id" />
-    <div class="flex justify-end pt-10">
-      <n-pagination v-bind="Pagination as any" />
-    </div>
+    <n-data-table
+      remote
+      mt-30 :loading="isLoading" :columns="columns" :data="data?.pageData" :bordered="false"
+      :row-key="row => row.id" :pagination="Pagination"
+    />
     <!-- 新增/编辑/查看 -->
   </CommonPage>
-  <n-modal v-model:show="modalVisible" preset="card" size="huge" :bordered="false" class="w-600px" :title="modalTitle"
-    :loading="isLoading">
-    <NForm ref="modalFormRef" label-placement="left" label-align="left" :label-width="80" :model="modalForm"
-      :disabled="modalAction === 'view'">
+  <n-modal
+    v-model:show="modalVisible" preset="card" size="huge" :bordered="false" class="w-600px" :title="modalTitle"
+    :loading="isLoading"
+  >
+    <NForm
+      ref="modalFormRef" label-placement="left" label-align="left" :label-width="80" :model="modalForm"
+      :disabled="modalAction === 'view'"
+    >
       <n-form-item label="作者" path="author">
         <n-input v-model:value="modalForm.author" disabled />
       </n-form-item>
-      <n-form-item label="文章标题" path="title" :rule="{
-        required: true,
-        message: '请输入文章标题',
-        trigger: ['input', 'blur'],
-      }">
+      <n-form-item
+        label="文章标题" path="title" :rule="{
+          required: true,
+          message: '请输入文章标题',
+          trigger: ['input', 'blur'],
+        }"
+      >
         <n-input v-model:value="modalForm.title" placeholder="请输入文章标题" />
       </n-form-item>
-      <n-form-item label="文章内容" path="content" :rule="{
-        required: true,
-        message: '请输入文章内容',
-        trigger: ['input', 'blur'],
-      }">
-        <n-input v-model:value="modalForm.content" placeholder="请输入文章内容" type="textarea" :autosize="{
-          minRows: 3,
-          maxRows: 5,
-        }" />
+      <n-form-item
+        label="文章内容" path="content" :rule="{
+          required: true,
+          message: '请输入文章内容',
+          trigger: ['input', 'blur'],
+        }"
+      >
+        <n-input
+          v-model:value="modalForm.content" placeholder="请输入文章内容" type="textarea" :autosize="{
+            minRows: 3,
+            maxRows: 5,
+          }"
+        />
       </n-form-item>
     </NForm>
     <template v-if="modalAction !== 'view'" #footer>
