@@ -113,11 +113,6 @@
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"
   },
-  "lint-staged": {
-    "*.{vue,js,ts}": "eslint --fix",
-    "*.{scss,css,vue}": "stylelint  --fix --allow-empty-input",
-    "*.{ts,cts,mts,tsx,vue}": "vue-tsc --noEmit"
-  },
   "config": {
     "commitizen": {
       "path": "node_modules/cz-git",
