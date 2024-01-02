@@ -72,6 +72,5 @@ export function setupVitePlugins(viteEnv: ImportMetaEnv, isBuild: boolean): Plug
   if (viteEnv.VITE_LEGACY)
     plugins.push(legacy)
 
-
   return plugins
 }

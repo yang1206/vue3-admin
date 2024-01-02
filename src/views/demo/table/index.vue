@@ -66,7 +66,7 @@ async function handleQuery() {
   refetch()
 }
 
-const columns: DataTableColumns<POST.RowData> = [
+const columns = ref<DataTableColumns<POST.RowData>>([
   { type: 'selection', fixed: 'left' },
   { title: '标题', key: 'title', width: 150, ellipsis: { tooltip: true } },
   { title: '分类', key: 'category', width: 80, ellipsis: { tooltip: true } },
@@ -129,7 +129,7 @@ const columns: DataTableColumns<POST.RowData> = [
       ]
     },
   },
-]
+])
 
 async function handleReset() {
   for (const key in queryForm)
@@ -239,6 +239,7 @@ const Pagination = reactive(
         <NButton ml-20 type="primary" @click="handleQuery">
           搜索
         </NButton>
+        <TableSetting v-model:columns="columns" />
       </div>
     </div>
 
