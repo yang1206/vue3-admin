@@ -27,7 +27,7 @@ export function clearSession() {
 
 export const sessionCryptoStorage = {
   getItem(key: string) {
-    return getSession(key)
+    return getSession<string>(key)
   },
   setItem(key: string, value: string) {
     setSession(key, value)

@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { useUserStore } from '@/store'
 
+defineOptions({
+  name: 'Workbench',
+})
 const userStore = useUserStore()
 </script>
 

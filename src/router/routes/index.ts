@@ -8,6 +8,19 @@ export const basicRoutes: RoutesType = [
     path: '/404',
     component: () => import('@/views/error-page/404.vue'),
     isHidden: true,
+    meta: {
+      title: '页面飞走了',
+    },
+  },
+
+  {
+    name: '403',
+    path: '/403',
+    component: () => import('@/views/error-page/403.vue'),
+    isHidden: true,
+    meta: {
+      title: '没有权限',
+    },
   },
 
   {

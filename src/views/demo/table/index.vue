@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import type { DataTableColumns, PaginationProps } from 'naive-ui'
+import type { DataTableColumns } from 'naive-ui'
 import { NButton, NForm } from 'naive-ui'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
+import { useMutation, useQuery } from '@tanstack/vue-query'
 import { formatDateTime, renderIcon } from '@/utils'
 import { addPost, deletePost, fetchPosts, updatePost } from '@/api'
 import { useUserStore } from '@/store'
 
 const userStore = useUserStore()
-const queryClient = useQueryClient()
 const modalAction = ref('')
 let modalForm = reactive({ author: userStore.name, title: '', content: '' })
 const modalFormRef = ref<InstanceType<typeof NForm>>()
@@ -57,16 +56,14 @@ const { mutate: deleteMutate } = useMutation({
   },
 })
 
-const { data, isLoading } = useQuery(computed(() => {
+const { data, isLoading, refetch } = useQuery(computed(() => {
   return {
     ...fetchPosts(queryForm),
   }
 }))
 
 async function handleQuery() {
-  queryClient.refetchQueries({
-    queryKey: ['posts'],
-  })
+  refetch()
 }
 
 const columns: DataTableColumns<POST.RowData> = [
@@ -135,9 +132,11 @@ const columns: DataTableColumns<POST.RowData> = [
 ]
 
 async function handleReset() {
-  queryForm.title = ''
+  for (const key in queryForm)
+    queryForm[key as keyof typeof queryForm] = null as unknown as never
   queryForm.pageNum = 1
   queryForm.pageSize = 10
+  handleQuery()
 }
 
 function handleAdd() {
@@ -194,7 +193,6 @@ const Pagination = reactive(
     pageSize: queryForm.pageSize,
     showSizePicker: true,
     pageSizes: [10, 20, 30, 40],
-    itemCount: 60,
     showQuickJumper: true,
     prefix: () => {
       return h('span', `共${data.value?.total}条`)
@@ -247,7 +245,7 @@ const Pagination = reactive(
     <n-data-table
       remote
       mt-30 :loading="isLoading" :columns="columns" :data="data?.pageData" :bordered="false"
-      :row-key="row => row.id" :pagination="Pagination"
+      :row-key="row => row.id" :pagination="{ ...Pagination, itemCount: data?.total }"
     />
     <!-- 新增/编辑/查看 -->
   </CommonPage>

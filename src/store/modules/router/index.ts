@@ -4,10 +4,11 @@ import { asyncRoutes, basicRoutes } from '@/router/routes'
 import type { RoutesType } from '~/typings/router'
 import type { Role } from '@/store'
 
-export const usePermissionStore = defineStore('permission', {
+export const useRouterStore = defineStore('router', {
   state() {
     return {
       accessRoutes: <RoutesType> [],
+      keepAliveComponents: <string[]> [],
     }
   },
   getters: {
@@ -26,6 +27,10 @@ export const usePermissionStore = defineStore('permission', {
     },
     resetPermission() {
       this.$reset()
+    },
+    setKeepAliveComponents(compNames: string[]) {
+      // 设置需要缓存的组件
+      this.keepAliveComponents = compNames
     },
   },
 })

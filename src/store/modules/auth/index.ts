@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { getLocal, removeLocal, setLocal } from '@/utils'
-import { usePermissionStore, useTabStore } from '@/store'
+import { useRouterStore, useTabStore } from '@/store'
 import { resetRouter, router } from '@/router'
 import { TOKEN_CODE } from '@/constants'
 
@@ -20,7 +20,7 @@ export const useAuthStore = defineStore('auth', {
 
     async logout() {
       const { resetTabs } = useTabStore()
-      const { resetPermission } = usePermissionStore()
+      const { resetPermission } = useRouterStore()
       this.removeToken()
       resetPermission()
       resetTabs()

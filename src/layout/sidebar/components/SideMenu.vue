@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { MenuInst, MenuOption } from 'naive-ui'
 import type { Meta, RouteType } from '~/typings/router'
-import { useAppStore, usePermissionStore, useTabStore } from '@/store'
+import { useAppStore, useRouterStore, useTabStore } from '@/store'
 import { isUrl, renderCustomIcon, renderIcon } from '@/utils'
 
 const router = useRouter()
 const currentRoute = useRoute()
-const permissionStore = usePermissionStore()
+const routerStore = useRouterStore()
 const appStore = useAppStore()
 const tabStore = useTabStore()
 
@@ -17,7 +17,7 @@ watch(currentRoute, async () => {
 })
 
 const menuOptions = computed(() => {
-  return permissionStore.menus.map((item: RouteType) => getMenuItem(item)).sort((a: { order: number }, b: { order: number }) => a.order - b.order)
+  return routerStore.menus.map((item: RouteType) => getMenuItem(item)).sort((a: { order: number }, b: { order: number }) => a.order - b.order)
 })
 
 function resolvePath(basePath: string, path: string) {

@@ -29,18 +29,6 @@ const appStore = useAppStore()
 type ThemeVars = Exclude<GlobalThemeOverrides['common'], undefined>
 type ThemeVarsKeys = keyof ThemeVars
 
-// watch(
-//   () => themStore.naiveThemeOverrides.common,
-//   (common) => {
-//     for (const key in common) {
-//       useCssVar(`--${kebabCase(key)}`, document.documentElement).value = common[key as ThemeVarsKeys] || ''
-//       if (key === 'primaryColor')
-//         window.localStorage.setItem('__THEME_COLOR__', common[key as ThemeVarsKeys] || '')
-//     }
-//   },
-//   { immediate: true },
-// )
-
 function setupCssVar() {
   const common = appStore.naiveThemeOverrides.common
   for (const key in common) {

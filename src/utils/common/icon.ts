@@ -1,7 +1,7 @@
 import { h } from 'vue'
 import { Icon } from '@iconify/vue'
 import { NIcon } from 'naive-ui'
-import SvgIcon from '@/components/custom/SvgIcon.vue'
+import SvgIcon from '@/components/custom/Icon/SvgIcon.vue'
 
 interface Props {
   size?: number

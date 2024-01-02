@@ -26,9 +26,9 @@ const contextMenuOption = reactive<ContextMenuOption>({
 watch(
   () => route.path,
   () => {
-    const { name, fullPath: path } = route
+    const { name, fullPath: path, meta: { keepAlive } } = route
     const title = route.meta?.title as string || ''
-    tabStore.addTab({ name: name as string, path, title })
+    tabStore.addTab({ name: name as string, path, title, keepAlive })
   },
   { immediate: true },
 )

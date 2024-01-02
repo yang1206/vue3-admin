@@ -64,7 +64,7 @@ const actionMap = new Map([
   [
     'reload',
     () => {
-      tabStore.reloadTab(route.fullPath, route.meta.keepAlive ?? false)
+      tabStore.reloadTab(route.fullPath, route.meta?.keepAlive ?? false)
     },
   ],
   [

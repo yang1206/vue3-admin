@@ -49,7 +49,7 @@ export default {
       },
     },
     {
-      name: 'Table',
+      name: 'DemoTable',
       path: 'table',
       component: () => import('@/views/demo/table/index.vue'),
       meta: {

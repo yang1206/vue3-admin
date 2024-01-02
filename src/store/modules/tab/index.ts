@@ -1,40 +1,43 @@
 import { defineStore } from 'pinia'
-import { WITHOUT_TAB_PATHS, activeTab, tabs } from './helpers'
 import { router } from '@/router'
-import { setSession } from '@/utils'
+import { sessionCryptoStorage } from '@/utils'
 
 export interface TabItem {
   name: string
   path: string
   title?: string
   keepAlive?: boolean
+  icon?: string
 }
 
 export const useTabStore = defineStore('tab', {
   state() {
     return {
-      tabs: <Array<TabItem>> tabs || [],
-      activeTab: <string> activeTab || '',
+      tabs: <Array<TabItem>> [],
+      activeTab: <string> '',
       reloading: <boolean> true,
     }
+  },
+  getters: {
+    activeIndex(): number {
+      return this.tabs.findIndex(item => item.path === this.activeTab)
+    },
   },
   actions: {
     async setActiveTab(path: string) {
       await nextTick()
       this.activeTab = path
-      setSession('activeTab', path)
     },
     setTabs(tabs: Array<TabItem>) {
       this.tabs = tabs
-      setSession('tabs', tabs)
     },
     addTab(tab: TabItem) {
-      const url = new URL(tab.path, 'http://example.com')
-      const path = url.pathname
-      this.setActiveTab(path)
-      if (WITHOUT_TAB_PATHS.includes(path) || this.tabs.some(item => item.path === path))
-        return
-      this.setTabs([...this.tabs, tab])
+      const findIndex = this.tabs.findIndex(item => item.path === tab.path)
+      if (findIndex !== -1)
+        this.tabs.splice(findIndex, 1, tab)
+      else
+        this.setTabs([...this.tabs, tab])
+      this.setActiveTab(tab.path)
     },
     async reloadTab(path: string, keepAlive?: boolean) {
       const findItem = this.tabs.find(item => item.path === path)
@@ -53,15 +56,9 @@ export const useTabStore = defineStore('tab', {
       }, 100)
     },
     async removeTab(path: string) {
-      if (path === this.activeTab) {
-        const activeIndex = this.tabs.findIndex(item => item.path === path)
-        if (activeIndex > 0)
-          router.push(this.tabs[activeIndex - 1].path)
-
-        else
-          router.push(this.tabs[activeIndex + 1].path)
-      }
       this.setTabs(this.tabs.filter(tab => tab.path !== path))
+      if (path === this.activeTab)
+        router.push(this.tabs[this.tabs.length - 1].path)
     },
     removeOther(curPath: string) {
       this.setTabs(this.tabs.filter(tab => tab.path === curPath))
@@ -83,8 +80,11 @@ export const useTabStore = defineStore('tab', {
         router.push(filterTabs[filterTabs.length - 1].path)
     },
     resetTabs() {
-      this.setTabs([])
-      this.setActiveTab('')
+      this.$reset()
     },
+  },
+  persist: {
+    key: 'tab',
+    storage: sessionCryptoStorage,
   },
 })
