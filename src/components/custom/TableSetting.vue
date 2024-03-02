@@ -53,12 +53,14 @@ watch(
     </template>
     <div class="w-180px">
       <VueDraggable ref="el" v-model="list" ghost-class="ghost">
-        <div v-for="item in (list as any)" :key="item.key" class="h-36px flex items-center px-12px hover:bg-primary_active">
-          <icon-mdi-drag class="mr-8px cursor-move text-20px" />
-          <n-checkbox v-model:checked="item.checked">
-            {{ item.title }}
-          </n-checkbox>
-        </div>
+        <template v-for="item in (list as any)" :key="item.key">
+          <div v-if="item.type !== 'selection'" class="h-36px flex items-center px-12px hover:bg-primary_active">
+            <icon-mdi-drag class="mr-8px cursor-move text-20px" />
+            <n-checkbox v-model:checked="item.checked">
+              {{ item.title }}
+            </n-checkbox>
+          </div>
+        </template>
       </VueDraggable>
     </div>
   </n-popover>

@@ -142,6 +142,7 @@ declare global {
   const useColumnLink: typeof import('naive-ui-pro-components')['useColumnLink']
   const useColumns: typeof import('naive-ui-pro-components')['useColumns']
   const useConfirmDialog: typeof import('@vueuse/core')['useConfirmDialog']
+  const useControls: typeof import('naive-ui-pro-components')['useControls']
   const useCounter: typeof import('@vueuse/core')['useCounter']
   const useCssModule: typeof import('vue')['useCssModule']
   const useCssVar: typeof import('@vueuse/core')['useCssVar']
@@ -301,6 +302,7 @@ declare global {
 // for vue template auto import
 import { UnwrapRef } from 'vue'
 declare module 'vue' {
+  interface GlobalComponents {}
   interface ComponentCustomProperties {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
@@ -326,7 +328,6 @@ declare module 'vue' {
     readonly debouncedWatch: UnwrapRef<typeof import('@vueuse/core')['debouncedWatch']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
-    readonly defineControls: UnwrapRef<typeof import('naive-ui-pro-components')['defineControls']>
     readonly defineForm: UnwrapRef<typeof import('naive-ui-pro-components')['defineForm']>
     readonly defineTable: UnwrapRef<typeof import('naive-ui-pro-components')['defineTable']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
@@ -439,6 +440,7 @@ declare module 'vue' {
     readonly useColumnLink: UnwrapRef<typeof import('naive-ui-pro-components')['useColumnLink']>
     readonly useColumns: UnwrapRef<typeof import('naive-ui-pro-components')['useColumns']>
     readonly useConfirmDialog: UnwrapRef<typeof import('@vueuse/core')['useConfirmDialog']>
+    readonly useControls: UnwrapRef<typeof import('naive-ui-pro-components')['useControls']>
     readonly useCounter: UnwrapRef<typeof import('@vueuse/core')['useCounter']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVar: UnwrapRef<typeof import('@vueuse/core')['useCssVar']>
@@ -591,6 +593,7 @@ declare module 'vue' {
   }
 }
 declare module '@vue/runtime-core' {
+  interface GlobalComponents {}
   interface ComponentCustomProperties {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
@@ -616,7 +619,6 @@ declare module '@vue/runtime-core' {
     readonly debouncedWatch: UnwrapRef<typeof import('@vueuse/core')['debouncedWatch']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
-    readonly defineControls: UnwrapRef<typeof import('naive-ui-pro-components')['defineControls']>
     readonly defineForm: UnwrapRef<typeof import('naive-ui-pro-components')['defineForm']>
     readonly defineTable: UnwrapRef<typeof import('naive-ui-pro-components')['defineTable']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
@@ -729,6 +731,7 @@ declare module '@vue/runtime-core' {
     readonly useColumnLink: UnwrapRef<typeof import('naive-ui-pro-components')['useColumnLink']>
     readonly useColumns: UnwrapRef<typeof import('naive-ui-pro-components')['useColumns']>
     readonly useConfirmDialog: UnwrapRef<typeof import('@vueuse/core')['useConfirmDialog']>
+    readonly useControls: UnwrapRef<typeof import('naive-ui-pro-components')['useControls']>
     readonly useCounter: UnwrapRef<typeof import('@vueuse/core')['useCounter']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVar: UnwrapRef<typeof import('@vueuse/core')['useCssVar']>

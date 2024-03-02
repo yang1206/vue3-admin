@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NProTable, defineTable, useColumns } from 'naive-ui-pro-components'
+import { NpTable, defineTable, useColumns } from 'naive-ui-pro-components'
 import {
   NSwitch,
 } from 'naive-ui'
@@ -88,7 +88,7 @@ const table = defineTable<POST.RowData[]>({
   immediate: true,
 })
 
-const controls = defineControls([
+const controls = useControls([
   {
     render: '搜索',
     helper: () => table.search(),
@@ -122,6 +122,6 @@ const controls = defineControls([
 
       <component :is="controls" style="margin-bottom: 24px;" />
     </div>
-    <NProTable mt-30 :instance="table" :columns="columns" :bordered="false" :row-key="row => row.id" />
+    <NpTable mt-30 :instance="table" :columns="columns" :bordered="false" :row-key="row => row.id" />
   </CommonPage>
 </template>
