@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { DataTableColumns } from 'naive-ui'
-import { NButton, NForm } from 'naive-ui'
-import { useMutation, useQuery } from '@tanstack/vue-query'
-import { formatDateTime, renderIcon } from '@/utils'
 import { addPost, deletePost, fetchPosts, updatePost } from '@/api'
 import { useUserStore } from '@/store'
+import { formatDateTime, renderIcon } from '@/utils'
+import { useMutation, useQuery } from '@tanstack/vue-query'
+import { NButton, NForm } from 'naive-ui'
 
 const userStore = useUserStore()
 const modalAction = ref('')
@@ -250,9 +250,9 @@ const Pagination = reactive(
     />
     <!-- 新增/编辑/查看 -->
   </CommonPage>
-  <n-modal
-    v-model:show="modalVisible" preset="card" size="huge" :bordered="false" class="w-600px" :title="modalTitle"
-    :loading="isLoading"
+  <DragModal
+    v-model:open="modalVisible"
+    size="huge" :bordered="false" class="w-600px" :title="modalTitle" :loading="isLoading"
   >
     <NForm
       ref="modalFormRef" label-placement="left" label-align="left" :label-width="80" :model="modalForm"
@@ -295,5 +295,5 @@ const Pagination = reactive(
         </NButton>
       </footer>
     </template>
-  </n-modal>
+  </DragModal>
 </template>

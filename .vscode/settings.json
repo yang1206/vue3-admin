@@ -62,5 +62,6 @@
     "jsonc",
     "yaml"
   ],
-  "vue.codeActions.enabled": true
+  "vue.codeActions.enabled": true,
+  "arrayIndexInlay.enabled": true
 }

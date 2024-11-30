@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { NpTable, defineTable, useColumns } from 'naive-ui-pro-components'
-import {
-  NSwitch,
-} from 'naive-ui'
-import { useQuery } from '@tanstack/vue-query'
+import { fetchPosts } from '@/api'
 import {
   formatDateTime,
   isNullOrUndef,
 } from '@/utils'
-import { fetchPosts } from '@/api'
+import { useQuery } from '@tanstack/vue-query'
+import {
+  NSwitch,
+} from 'naive-ui'
+import { defineTable, NpTable, useColumns } from 'naive-ui-pro-components'
 
 const queryForm = reactive({
   title: '',

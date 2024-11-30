@@ -5,14 +5,14 @@ html {
 *,
 ::before,
 ::after {
-  margin: 0;
-  padding: 0;
   box-sizing: inherit;
+  padding: 0;
+  margin: 0;
 }
 
 a {
-  text-decoration: none;
   color: inherit;
+  text-decoration: none;
 }
 
 a:hover,
@@ -29,9 +29,9 @@ ul {
 
 input,
 textarea {
-  outline: none;
-  border: none;
   resize: none;
+  border: none;
+  outline: none;
 }
 
 body {

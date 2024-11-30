@@ -1,6 +1,6 @@
 import type { GlobalThemeOverrides } from 'naive-ui'
-import { darkTheme } from 'naive-ui'
 import type { BuiltInGlobalTheme } from 'naive-ui/es/themes/interface'
+import { darkTheme } from 'naive-ui'
 import { defineStore } from 'pinia'
 import { getNaiveThemeOverrides, initThemeSettings } from './helpers'
 
@@ -48,7 +48,6 @@ export const useAppStore = defineStore('app-store', {
         Math.max(x, innerWidth - x),
         Math.max(y, innerHeight - y),
       )
-      // @ts-expect-error: Transition API
       const transition = document.startViewTransition(async () => {
         this.isDark = !this.isDark
         await nextTick()

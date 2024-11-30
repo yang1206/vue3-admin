@@ -1,10 +1,9 @@
-import { queryOptions } from '@tanstack/vue-query'
 import request from '@/service'
 
 export function fetchPosts(data?: any) {
   const query = { ...data }
   delete query.title
-  return queryOptions({
+  return ({
     queryKey: ['posts', query],
     queryFn: async () => (await request.get<IAxiosResponseData<POST.IPostsData>>('posts', {
       params: data,
@@ -13,7 +12,7 @@ export function fetchPosts(data?: any) {
 }
 
 export function fetchPostById(id: string) {
-  return queryOptions({
+  return ({
     queryKey: [id, 'post'],
     queryFn: async () => await request.get(`/post/${id}`),
   })
